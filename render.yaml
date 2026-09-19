@@ -1,6 +1,6 @@
 # Render Blueprint for the Nuro orchestrator (worker WS control plane + HTTP API).
 #
-# Deploy: Render Dashboard → New → Blueprint → connect the NuroAI-xyz/Nuro repo.
+# Deploy: Render Dashboard → New → Blueprint → connect the nuroaidev/Nuro repo.
 # Render reads this file, builds the Docker image from the monorepo root, and
 # prompts for the secret env vars marked `sync: false`.
 #

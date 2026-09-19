@@ -94,6 +94,14 @@ function Topbar({ open, onToggle }: { open: boolean; onToggle: () => void }) {
 
         <div className="flex items-center gap-4 md:gap-5">
           <a
+            href="https://github.com/nuroaidev/Nuro"
+            target="_blank"
+            rel="noreferrer"
+            className="hidden text-xs text-[#8a8a8a] transition-colors hover:text-white sm:inline"
+          >
+            GitHub
+          </a>
+          <a
             href={APP_URL}
             className="btn-primary px-4 py-2 text-xs md:px-5 md:py-2.5"
           >

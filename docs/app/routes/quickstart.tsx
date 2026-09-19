@@ -90,7 +90,15 @@ python3.12 -m venv .venv
         </ul>
         <p>
           See <a href="/workers">Workers and earning</a> for setup, model
-          classes, and how payouts work.
+          classes, and how payouts work. Source:{" "}
+          <a href="https://github.com/nuroaidev/Nuro" target="_blank" rel="noreferrer">
+            nuroaidev/Nuro
+          </a>{" "}
+          and the seed fleet at{" "}
+          <a href="https://github.com/nuroaidev/nuro_worker" target="_blank" rel="noreferrer">
+            nuroaidev/nuro_worker
+          </a>
+          .
         </p>
 
         <h2 id="stake">Stake $NURO</h2>

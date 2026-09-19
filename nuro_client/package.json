@@ -6,7 +6,7 @@
   "homepage": "https://nuroai.xyz",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NuroAI-xyz/Nuro.git",
+    "url": "git+https://github.com/nuroaidev/Nuro.git",
     "directory": "nuro_client"
   },
   "keywords": [
