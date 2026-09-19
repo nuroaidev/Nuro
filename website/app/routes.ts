@@ -8,6 +8,7 @@ export default [
   route("staking", "routes/staking.tsx"),
   route("treasury", "routes/treasury.tsx"),
   route("paper", "routes/paper.tsx"),
+  route("live", "routes/live.tsx"),
   route("profile", "routes/profile.tsx"),
 
   // Server-only resource routes (no UI): the assistant proxy + billing.

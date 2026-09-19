@@ -93,6 +93,7 @@ const primaryLinks: { label: string; href: string; external?: boolean }[] = [
   { label: "Earn", href: "/earn" },
   { label: "Account", href: "/profile" },
   { label: "Data", href: DATA_URL, external: true },
+  { label: "Live", href: "/live" },
   { label: "Paper", href: "/paper" },
   { label: "Docs", href: DOCS_URL, external: true },
 ];
@@ -330,6 +331,9 @@ export function SiteFooter() {
             </a>
             <a href="https://nuroai.xyz" className="hover:text-white">
               nuroai.xyz
+            </a>
+            <a href="/live" className="hover:text-white">
+              Live
             </a>
             <a href="/paper" className="hover:text-white">
               Paper

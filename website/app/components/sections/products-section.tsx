@@ -43,7 +43,7 @@ export function ProductsSection() {
       <div className="page-shell relative section-gap">
         <Reveal>
           <div className="max-w-2xl">
-            <p className="section-index">03 / Product</p>
+            <p className="section-index">04 / Product</p>
             <h2 className="mt-4 text-[clamp(2rem,4vw,3.25rem)] font-semibold leading-tight tracking-[-0.02em]">
               Three ways into the network
             </h2>

@@ -2,6 +2,7 @@ import type { Route } from "./+types/home";
 import { SiteFooter, SiteHeader } from "../components/layout/site-chrome";
 import { HeroSection } from "../components/sections/hero-section";
 import { PrivateInferenceSection } from "../components/sections/private-inference-section";
+import { LiveInferenceSection } from "../components/sections/live-inference-section";
 import { ProductsSection } from "../components/sections/products-section";
 import { NuroTokenSection } from "../components/sections/nuro-token-section";
 
@@ -30,6 +31,7 @@ export default function Home() {
       <main>
         <HeroSection />
         <PrivateInferenceSection />
+        <LiveInferenceSection />
         <ProductsSection />
         <NuroTokenSection />
       </main>

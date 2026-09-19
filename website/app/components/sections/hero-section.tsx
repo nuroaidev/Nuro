@@ -31,8 +31,8 @@ export function HeroSection() {
             className="load-rise mt-10 flex flex-wrap gap-4"
             style={{ animationDelay: "0.28s" }}
           >
-            <a href="#problem" className="btn-primary">
-              See the problem
+            <a href="#live" className="btn-primary">
+              Watch a live run
             </a>
             <a href="#products" className="btn-secondary">
               Use the network
