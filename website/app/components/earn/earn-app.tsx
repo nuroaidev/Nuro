@@ -6,12 +6,13 @@ import { useEarn } from "../../lib/use-earn";
 import { useBrowserWorker } from "../../lib/use-browser-worker";
 import { Link } from "react-router";
 import {
-  isValidSolanaAddress,
+  isValidEvmAddress,
   ORCHESTRATOR_WS_URL,
   PUBLIC_API_URL,
   type IssuedApiKey,
   type UserStats,
 } from "../../lib/orchestrator";
+import { ROBINHOOD_CHAIN_ID } from "../../lib/token";
 
 function useMounted() {
   const [mounted, setMounted] = useState(false);
@@ -19,11 +20,11 @@ function useMounted() {
   return mounted;
 }
 
-function fmtUsd(n: number | undefined) {
+function fmtUsdg(n: number | undefined) {
   const v = n ?? 0;
-  // Per-token earnings are often sub-cent; show enough precision to be visible.
-  if (v > 0 && v < 0.01) return `$${v.toFixed(4)}`;
-  return `$${v.toFixed(2)}`;
+  // Online stipends and small jobs are sub-cent; keep them visible.
+  if (v > 0 && v < 0.01) return `${v.toFixed(4)} USDG`;
+  return `${v.toFixed(2)} USDG`;
 }
 
 function fmtUptime(seconds: number | undefined) {
@@ -114,9 +115,10 @@ export default function EarnApp() {
               Two ways to contribute
             </h2>
             <p className="mt-4 text-[15px] leading-relaxed text-[#8a8a8a] md:text-base">
-              You earn a share of every token you serve, paid in USDC or $NURO.
-              Native serves the largest models at the top rate; browser runs in
-              this tab - one click, no terminal.
+              You earn USDG for time online and for every job you serve.
+              Withdrawals queue to your Robinhood wallet and settle once the
+              paymaster vault is funded. Native serves the largest models;
+              browser runs in this tab — one click, no terminal.
             </p>
           </div>
         </Reveal>
@@ -225,7 +227,7 @@ function StatusCard({
   tokPerSec?: number;
 }) {
   const cells = [
-    { value: mounted ? fmtUsd(earnedTotal) : "-", label: "earned (USD)" },
+    { value: mounted ? fmtUsdg(earnedTotal) : "-", label: "earned (USDG)" },
     { value: mounted ? fmtUptime(uptime) : "-", label: "uptime" },
     { value: mounted ? String(jobs ?? 0) : "-", label: "jobs" },
     {
@@ -262,7 +264,7 @@ function StatusCard({
       </div>
 
       <p className="mt-6 text-sm text-[#8a8a8a]">
-        {mounted ? fmtUsd(earnedToday) : "-"} earned today
+        {mounted ? fmtUsdg(earnedToday) : "-"} earned today
       </p>
     </div>
   );
@@ -308,14 +310,12 @@ function PayoutCard({
   const [msg, setMsg] = useState<string | null>(null);
   const [err, setErr] = useState<string | null>(null);
 
-  const reached = payout.availableUsd >= payout.thresholdUsd;
-  const unlocked = reached || Boolean(payout.address);
   const remaining = Math.max(0, payout.thresholdUsd - payout.availableUsd);
   const pct = Math.min(
     100,
-    Math.round((payout.availableUsd / payout.thresholdUsd) * 100),
+    Math.round((payout.availableUsd / Math.max(payout.thresholdUsd, 0.01)) * 100),
   );
-  const addressValid = isValidSolanaAddress(address);
+  const addressValid = isValidEvmAddress(address);
   const addressChanged = address.trim() !== (payout.address ?? "");
 
   const onSave = useCallback(async () => {
@@ -324,7 +324,7 @@ function PayoutCard({
     setErr(null);
     setMsg(null);
     try {
-      await save(address.trim());
+      await save(address.trim(), ROBINHOOD_CHAIN_ID);
       setMsg("Payout address saved");
     } catch (e) {
       setErr(e instanceof Error ? e.message : "Failed to save address");
@@ -340,7 +340,9 @@ function PayoutCard({
     setMsg(null);
     try {
       await withdraw();
-      setMsg("Payout requested - it'll show as pending until settled.");
+      setMsg(
+        "Payout queued. It stays pending until the paymaster vault is funded.",
+      );
     } catch (e) {
       setErr(e instanceof Error ? e.message : "Failed to request payout");
     } finally {
@@ -354,72 +356,70 @@ function PayoutCard({
         <div>
           <p className="section-index text-[#7ED6FF]/70">Payout</p>
           <h3 className="mt-3 text-lg font-semibold tracking-[-0.02em]">
-            {fmtUsd(payout.availableUsd)}{" "}
+            {fmtUsdg(payout.availableUsd)}{" "}
             <span className="text-sm font-normal text-[#8a8a8a]">available</span>
           </h3>
         </div>
         <span className="text-[13px] text-[#6f6f6f]">
-          Min payout {fmtUsd(payout.thresholdUsd)}
+          Min payout {fmtUsdg(payout.thresholdUsd)}
         </span>
       </div>
 
-      {!unlocked ? (
-        <div className="mt-5">
-          <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/[0.06]">
-            <div
-              className="h-full rounded-full bg-[#7ED6FF] transition-[width] duration-500"
-              style={{ width: `${pct}%` }}
-            />
-          </div>
-          <p className="mt-3 text-[14px] text-[#8a8a8a]">
-            Earn {fmtUsd(remaining)} more to unlock payouts and set your address.
-          </p>
-        </div>
-      ) : (
-        <div className="mt-5">
-          <label className="text-[13px] text-[#6f6f6f]">
-            Payout address (Solana wallet)
-          </label>
-          <div className="mt-2 flex flex-col gap-3 sm:flex-row">
-            <input
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              placeholder="Solana address…"
-              spellCheck={false}
-              className="w-full rounded-2xl border border-white/[0.08] bg-black/40 px-4 py-3 font-mono text-sm text-white outline-none placeholder:text-[#4a4a4a]"
-            />
-            <button
-              type="button"
-              onClick={onSave}
-              disabled={!addressValid || !addressChanged || saving}
-              className="btn-secondary shrink-0 px-6 disabled:opacity-40"
-            >
-              {saving ? "Saving…" : payout.address ? "Update" : "Save"}
-            </button>
-          </div>
-          {address && !addressValid && (
-            <p className="mt-2 text-xs text-[#ff9b9b]">
-              Enter a valid Solana wallet address.
+      <div className="mt-5">
+        {payout.availableUsd < payout.thresholdUsd && (
+          <div className="mb-5">
+            <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/[0.06]">
+              <div
+                className="h-full rounded-full bg-[#7ED6FF] transition-[width] duration-500"
+                style={{ width: `${pct}%` }}
+              />
+            </div>
+            <p className="mt-3 text-[14px] text-[#8a8a8a]">
+              Earn {fmtUsdg(remaining)} more to withdraw. Stay online — USDG
+              accrues while your worker is connected.
             </p>
-          )}
-
+          </div>
+        )}
+        <label className="text-[13px] text-[#6f6f6f]">
+          Payout address (Robinhood Chain)
+        </label>
+        <div className="mt-2 flex flex-col gap-3 sm:flex-row">
+          <input
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            placeholder="0x…"
+            spellCheck={false}
+            className="w-full rounded-2xl border border-white/[0.08] bg-black/40 px-4 py-3 font-mono text-sm text-white outline-none placeholder:text-[#4a4a4a]"
+          />
           <button
             type="button"
-            onClick={onWithdraw}
-            disabled={!payout.canRequest || withdrawing || addressChanged}
-            className="btn-primary mt-5 w-full disabled:opacity-40"
+            onClick={onSave}
+            disabled={!addressValid || !addressChanged || saving}
+            className="btn-secondary shrink-0 px-6 disabled:opacity-40"
           >
-            {withdrawing
-              ? "Requesting…"
-              : `Withdraw ${fmtUsd(payout.availableUsd)}`}
+            {saving ? "Saving…" : payout.address ? "Update" : "Save"}
           </button>
-          {payout.address && payout.availableUsd < payout.thresholdUsd && (
-            <p className="mt-2 text-center text-xs text-[#6f6f6f]">
-              Reach {fmtUsd(payout.thresholdUsd)} to withdraw.
-            </p>
-          )}
         </div>
-      )}
+        {address && !addressValid && (
+          <p className="mt-2 text-xs text-[#ff9b9b]">
+            Enter a valid EVM wallet address.
+          </p>
+        )}
+
+        <button
+          type="button"
+          onClick={onWithdraw}
+          disabled={!payout.canRequest || withdrawing || addressChanged}
+          className="btn-primary mt-5 w-full disabled:opacity-40"
+        >
+          {withdrawing
+            ? "Requesting…"
+            : `Withdraw ${fmtUsdg(payout.availableUsd)}`}
+        </button>
+        <p className="mt-2 text-center text-xs text-[#6f6f6f]">
+          Queued withdrawals settle in USDG after the paymaster vault is funded.
+        </p>
+      </div>
 
       {msg && <p className="mt-3 text-xs text-[#5ce6a5]">{msg}</p>}
       {err && <p className="mt-3 text-xs text-[#ff9b9b]">{err}</p>}
@@ -433,7 +433,7 @@ function PayoutCard({
                 key={p.id}
                 className="flex items-center justify-between text-sm"
               >
-                <span className="text-[#c9c9c9]">{fmtUsd(p.amountUsd)}</span>
+                <span className="text-[#c9c9c9]">{fmtUsdg(p.amountUsd)}</span>
                 <span
                   className={`text-xs capitalize ${
                     p.status === "paid"
@@ -685,7 +685,7 @@ function BillingStrip({ billing }: { billing: UserStats["billing"] }) {
 
       <div className="mt-4 border-t border-white/[0.06] pt-3">
         <p className="text-[13px] text-[#6f6f6f]">
-          Pay per token in USDC or $NURO (per 1M tokens, in / out):
+          Pay per token in USDG or $NURO (per 1M tokens, in / out):
         </p>
         <ul className="mt-2 space-y-1 text-[13px]">
           {tiers.map(([name, p]) => (
@@ -806,7 +806,7 @@ function NativeWorkerCard({
         Highest rate <span className="text-sm text-[#8a8a8a]">per token</span>
       </p>
       <p className="mt-1 text-[13px] text-[#6f6f6f]">
-        Serves the largest models - paid in USDC or $NURO
+        Serves the largest models — paid in USDG
       </p>
       <p className="mt-5 text-[15px] leading-relaxed text-[#8a8a8a]">
         Runs the biggest models on your own GPU in the background via Ollama - no

@@ -5,6 +5,7 @@ import { db, schema } from "../db/index.js";
 import { env } from "../env.js";
 import { verifyWorkerToken } from "../auth/tokens.js";
 import { completeJob, failJob } from "../jobs.js";
+import { forgetStipend, maybeCreditOnlineStipend } from "../earnings.js";
 import { registry } from "../registry.js";
 import {
   parseWorkerMessage,
@@ -80,6 +81,7 @@ export function attachWorkerWs(server: Server): void {
       } catch {
         /* noop */
       }
+      void maybeCreditOnlineStipend(worker.userId, worker.workerId);
     }
   }, env.pingIntervalMs).unref();
 }
@@ -196,10 +198,12 @@ async function handleRegister(
   });
 
   ws.send(serialize({ type: "registered", workerId: row.id }));
+  void maybeCreditOnlineStipend(verified.userId, row.id);
 }
 
 async function handleClose(state: ConnState): Promise<void> {
   if (!state.workerId) return;
+  forgetStipend(state.workerId);
   registry.removeWorker(state.workerId);
   await db
     .update(schema.workers)

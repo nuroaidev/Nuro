@@ -101,7 +101,11 @@ export async function listPayouts(
 
 export class PayoutError extends Error {}
 
-/** Request a withdrawal of the user's full available balance. */
+/**
+ * Queue a withdrawal of the user's full available USDG balance.
+ * Settles later from PAYMASTER_ADDRESS once that vault is funded —
+ * this only inserts a pending row (no on-chain transfer yet).
+ */
 export async function requestPayout(userId: string): Promise<PayoutRow> {
   const { address, chainId } = await getPayoutAddress(userId);
   if (!address || !isValidEvmAddress(address)) {

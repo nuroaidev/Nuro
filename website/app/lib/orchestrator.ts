@@ -232,9 +232,9 @@ export function requestPayout(accessToken: string): Promise<PayoutRecord> {
   return req("/v1/me/payout", { method: "POST", token: accessToken });
 }
 
-/** Validate a Solana (base58, 32-44 char) wallet address client-side. */
-export function isValidSolanaAddress(address: string): boolean {
-  return /^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(address.trim());
+/** Validate a Robinhood Chain (EVM) wallet address client-side. */
+export function isValidEvmAddress(address: string): boolean {
+  return /^0x[0-9a-fA-F]{40}$/.test(address.trim());
 }
 
 // --- Public inference API keys ---

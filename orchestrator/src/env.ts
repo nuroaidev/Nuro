@@ -36,7 +36,23 @@ export const env = {
     .map((s) => s.trim())
     .filter(Boolean),
   pingIntervalMs: Number(optional("PING_INTERVAL_SEC", "30")) * 1000,
-  payoutThresholdUsd: Number(optional("PAYOUT_THRESHOLD_USD", "10")),
+  // USDG is 1:1 USD. Small default so contributors can request a payout
+  // before the paymaster vault is funded (requests stay pending).
+  payoutThresholdUsd: Number(optional("PAYOUT_THRESHOLD_USD", "0.01")),
+  // Minimum USDG credited for a completed job (even tiny token counts).
+  earnJobFloorUsd: Number(optional("EARN_JOB_FLOOR_USD", "0.01")),
+  // USDG credited to each connected worker on an interval (0 = off).
+  onlineStipendUsd: Number(optional("ONLINE_STIPEND_USD", "0.002")),
+  onlineStipendIntervalMs:
+    Number(optional("ONLINE_STIPEND_INTERVAL_SEC", "60")) * 1000,
+  onlineStipendDailyCapUsd: Number(
+    optional("ONLINE_STIPEND_DAILY_CAP_USD", "0.24"),
+  ),
+  // Vault that will settle pending USDG payouts once funded.
+  paymasterAddress: optional(
+    "PAYMASTER_ADDRESS",
+    "0xcF470caDb0D93781911472F30eb2D666F5535F09",
+  ),
   // Shared secret for admin-only routes (e.g. seed-worker token provisioning).
   // Leave blank to disable those routes entirely.
   adminSecret: optional("ADMIN_SECRET", ""),

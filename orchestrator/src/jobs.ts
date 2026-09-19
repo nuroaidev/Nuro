@@ -1,5 +1,7 @@
 import { eq } from "drizzle-orm";
 import { db, schema } from "./db/index.js";
+import { env } from "./env.js";
+import { creditEarning } from "./earnings.js";
 import { computeEarningUsd } from "./rates.js";
 import type { ChatMessage, TokenUsage, WorkerClass } from "./protocol.js";
 import { registry, type ConnectedWorker } from "./registry.js";
@@ -76,15 +78,12 @@ export async function completeJob(
     .where(eq(schema.jobs.id, jobId))
     .returning({ model: schema.jobs.model });
 
-  // Worker payout is a revenue share of the job's market price (by model tier).
-  const amountUsd = computeEarningUsd(updated?.model ?? null, usage);
+  // Worker share of the job, floored so a completed job always credits
+  // a visible amount of USDG (1:1 with the stored USD column).
+  const quoted = computeEarningUsd(updated?.model ?? null, usage);
+  const amountUsd = Math.max(env.earnJobFloorUsd, quoted);
 
-  await db.insert(schema.earnings).values({
-    userId,
-    workerId,
-    jobId,
-    amountUsd: amountUsd.toFixed(6),
-  });
+  await creditEarning({ userId, workerId, jobId, amountUsd });
 }
 
 export async function failJob(jobId: string, message: string): Promise<void> {

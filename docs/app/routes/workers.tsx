@@ -85,21 +85,20 @@ https://nuroai.xyz/earn`}</CodeBlock>
 
         <h2 id="pay">How you get paid</h2>
         <p>
-          Earnings are per job, based on the worker class and the completion
-          size. Native jobs pay a base rate plus an amount per thousand
-          completion tokens; browser jobs pay a smaller base plus a smaller
-          per-token amount. The orchestrator records the amount for each job
-          from token counts only.
+          Earnings are in USDG. A connected worker accrues a small amount while
+          online, and every completed job credits at least a floor amount plus
+          a share of that job&apos;s token price. Withdrawals queue to your
+          Robinhood Chain wallet and settle once the paymaster vault is funded.
         </p>
         <DefTable
           rows={[
             {
-              term: "Native",
-              def: "Roughly $0.10-$0.14 per job (base plus per-1k completion tokens).",
+              term: "Online",
+              def: "Small USDG stipend while your worker is connected to the orchestrator, capped per day.",
             },
             {
-              term: "Browser",
-              def: "Roughly $0.07 per job (smaller base plus per-1k completion tokens).",
+              term: "Jobs",
+              def: "At least 0.01 USDG per completed job, plus the token-based share for larger work.",
             },
           ]}
         />
