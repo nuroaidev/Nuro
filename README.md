@@ -2,9 +2,6 @@
 
 Inference network powered by contributed compute - [nuroai.xyz](https://nuroai.xyz)
 
-- Network: [github.com/nuroaidev/Nuro](https://github.com/nuroaidev/Nuro)
-- Seed fleet: [github.com/nuroaidev/nuro_worker](https://github.com/nuroaidev/nuro_worker)
-
 | Package | Domain / role | Purpose |
 |---------|---------------|---------|
 | `nuro-website` | [nuroai.xyz](https://nuroai.xyz) | Landing page + app (`/earn`, staking, API) |

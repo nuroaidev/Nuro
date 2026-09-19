@@ -73,17 +73,6 @@ npx @nuroaixyz/worker \\
           The token also carries the worker class the orchestrator dispatches
           against.
         </Callout>
-        <p>
-          The contributor client lives in{" "}
-          <a href="https://github.com/nuroaidev/Nuro" target="_blank" rel="noreferrer">
-            nuroaidev/Nuro
-          </a>
-          . The always-on seed fleet that keeps the network warm is{" "}
-          <a href="https://github.com/nuroaidev/nuro_worker" target="_blank" rel="noreferrer">
-            nuroaidev/nuro_worker
-          </a>
-          .
-        </p>
 
         <h2 id="browser">Run a browser worker</h2>
         <p>
