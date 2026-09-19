@@ -1,6 +1,7 @@
 import { Link } from "react-router";
 import { Reveal } from "../util/reveal";
 import { STAKING_APY_PCT } from "../../lib/staking";
+import { ContractAddress } from "../layout/site-chrome";
 
 const tokenPillars = [
   {
@@ -37,6 +38,9 @@ export function NuroTokenSection() {
               What crosses the chain is metering. What never leaves the job is
               your prompt.
             </p>
+            <div className="mt-6 flex justify-center">
+              <ContractAddress />
+            </div>
           </div>
         </Reveal>
 

@@ -12,8 +12,8 @@ const DOCS_URL = "https://docs.nuroai.xyz";
 
 const NURO_EXPLORER_URL = explorerAddressUrl(NURO_TOKEN);
 
-/** Copyable $NURO contract-address chip (used in the footer). */
-function ContractAddress() {
+/** Copyable $NURO contract-address chip (footer + token section). */
+export function ContractAddress() {
   const [copied, setCopied] = useState(false);
   const copy = () => {
     void navigator.clipboard?.writeText(NURO_TOKEN_DISPLAY).then(() => {
