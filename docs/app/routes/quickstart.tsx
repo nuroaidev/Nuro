@@ -9,14 +9,14 @@ export function meta(_: Route.MetaArgs) {
     {
       name: "description",
       content:
-        "Call the Nuro inference API, run the proof gates locally, or contribute a GPU to the swarm.",
+        "Call the Nuro inference API, read the Paper, or contribute a GPU to the swarm.",
     },
   ];
 }
 
 const toc: TocItem[] = [
   { id: "call", text: "Call the API", depth: 2 },
-  { id: "proofs", text: "Run the proof gates", depth: 2 },
+  { id: "proofs", text: "The paper", depth: 2 },
   { id: "contribute", text: "Contribute a GPU", depth: 2 },
   { id: "stake", text: "Stake $NURO", depth: 2 },
 ];
@@ -51,26 +51,20 @@ export default function Quickstart() {
           depends on who is online in the swarm.
         </Callout>
 
-        <h2 id="proofs">Run the proof gates</h2>
+        <h2 id="proofs">The paper</h2>
         <p>
-          The privacy and correctness claims are not asks for trust - they run
-          on CPU in seconds. Clone the research repo and run the gates yourself.
+          The privacy and correctness claims are not asks for trust. The full
+          write-up — adversary, defenses, receipt, and measured gates — is the
+          Paper on the site.
         </p>
-        <CodeBlock>{`git clone https://github.com/Nuroai-xyz/nuro_swarm
-cd nuro_swarm
-
-python3.12 -m venv .venv
-.venv/bin/pip install torch cryptography numpy
-
-# Gate A - the split run is bit-identical to the whole model
-.venv/bin/python -m proof.correctness_gate
-
-# Gate D - a reconstruction adversary drops from ~100% to near chance
-.venv/bin/python -m proof.obfuscation_gate`}</CodeBlock>
-        <Callout tone="success" title="What you should see">
-          Gate A reports token-identical output across two processes over the
-          sealed wire. Gate D reports the untrusted node's prompt recovery
-          collapsing while the final output stays bit-identical.
+        <p>
+          <a href="https://nuroai.xyz/paper">nuroai.xyz/paper</a>
+        </p>
+        <Callout tone="success" title="What the gates show">
+          Gate A: the split run is bit-identical to the whole model. Gate D:
+          obfuscation drops recovery to chance on proprietary weights, and
+          fails on open weights. Gate E: one MPC share recovers the prompt at
+          chance even with public weights.
         </Callout>
 
         <h2 id="contribute">Contribute a GPU</h2>

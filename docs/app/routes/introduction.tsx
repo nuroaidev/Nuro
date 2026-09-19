@@ -134,6 +134,10 @@ export default function Introduction() {
         <h2 id="next">Where to go next</h2>
         <ul>
           <li>
+            <a href="https://nuroai.xyz/paper">The Paper</a> - the full
+            theoretical model and measured gates.
+          </li>
+          <li>
             <a href="/how-it-works">How it works</a> - the end-to-end path of a
             request, from prompt to receipt.
           </li>
