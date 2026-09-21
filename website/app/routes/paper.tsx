@@ -276,19 +276,22 @@ export default function PaperPage() {
   "model": "...",
   "nodes": [
     {
-      "role": "head | stage | tail",
-      "layer_range": [a, b],
-      "trust_tier": "operator | staked | volunteer"
+      "role": "head | compute-party-0 | compute-party-1 | tail",
+      "trust_tier": "operator | volunteer"
     }
   ],
   "defenses": {
+    "mechanism": "additive-2pc",
     "boundary_pinning": true,
     "edge_containment": true,
-    "activation_transform": "orthogonal-rotation@per-request"
+    "assumption": "honest-but-curious, non-colluding"
   },
   "privacy_eval": {
-    "adversary": "gradient-inversion + token-classifier",
-    "worst_untrusted_recovery": 0.06,
+    "adversary": "embedding-inversion + basis-recovery replay",
+    "one_share_recovery": 0.0021,
+    "attack_replayed": 0.0021,
+    "collusion_recovery": 0.992,
+    "chance": 0.002,
     "threshold": 0.10,
     "pass": true
   }
@@ -300,11 +303,23 @@ export default function PaperPage() {
             <Reveal>
               <Section id="results" index="05 / Results" title="What the gates measure">
                 <p>
-                  The following are measured on controlled transformers and, for
-                  the open-weight case, on a real pretrained model
-                  (Qwen2.5-0.5B). They prove the mechanism. They are not a
+                  Published 19 Sep 2026. Same adversary, four conditions, two
+                  controls. The figure is the receipt. These are measured on a
+                  controlled transformer and, for the open-weight case, on
+                  Qwen2.5-0.5B. They prove the mechanism. They are not a
                   blanket guarantee for every production request.
                 </p>
+                <figure className="overflow-hidden rounded-2xl border border-white/[0.06] bg-black">
+                  <img
+                    src="/paper-mpc-benchmark.png"
+                    alt="Prompt recovery: undefended 100%, open-weight obfuscation 100%, one MPC share 0.21%, attack replayed 0.21%. Correctness 99.6%. Collusion 99.2%."
+                    className="w-full"
+                  />
+                  <figcaption className="px-5 py-3 text-[13px] leading-relaxed text-[#6f6f6f]">
+                    How much of a prompt an untrusted node recovers. Lower is
+                    more private. Chance is 0.2% (1 / 512 vocab).
+                  </figcaption>
+                </figure>
                 <div className="space-y-3">
                   <Result
                     label="Gate A — correctness"
@@ -321,20 +336,26 @@ export default function PaperPage() {
                   <Result
                     label="Gate D audit — open weights"
                     before="0.3% while obfuscated"
-                    after="~100% after R = W⁻¹·W′"
+                    after="100% after R = W⁻¹·W′"
                     note="On an open model the node has both W and W′. The secret basis is recovered in closed form. Obfuscation is not enough here."
                   />
                   <Result
                     label="Gate E — secret-sharing MPC (open weights)"
                     before="100% from the true residual"
-                    after="0.2% from one share (chance)"
-                    note="Basis-recovery replay also stays at chance. Collusion of both shares returns ~99%. Privacy lives in non-collusion. Output agrees within tolerance, not bit-identity."
+                    after="0.21% from one share"
+                    note="Attack replay stays at 0.21% (R̂ = I). Collusion of both shares returns 99.2%. Greedy-token agreement 99.6%. Privacy lives in non-collusion."
                   />
                   <Result
                     label="Gate E — Qwen2.5-0.5B"
                     before="100% on raw activations"
                     after="0.000% from one MPC share"
                     note="Information-theoretic per share, independent of how the activation was produced. Holds at embedding and mid-depth."
+                  />
+                  <Result
+                    label="Gate F — online cost of that bound"
+                    before="public W is free"
+                    after="2,171 opens · 2.42 MiB / token"
+                    note="Same mini transformer, B=1 T=16. 181 opens per layer. 38.67 MiB both-ways. Protocol accounting, not a WAN RTT. Private is not free, and not fast."
                   />
                 </div>
               </Section>
@@ -376,8 +397,9 @@ export default function PaperPage() {
                 <p>
                   The live network at nuroai.xyz is the product built on this
                   model: contributed GPUs, an OpenAI-compatible API, and a
-                  public data board. Privacy is not bolted on later. It is the
-                  open problem this paper exists to close.
+                  public data board. Next on the engine: put the Gate F byte
+                  volume on two real machines (Gate B). Privacy is not bolted
+                  on later. It is the open problem this paper exists to close.
                 </p>
                 <p>
                   <a href="/earn" className="text-[#7ED6FF] hover:text-white">

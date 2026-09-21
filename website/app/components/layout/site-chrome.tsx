@@ -94,6 +94,7 @@ const primaryLinks: { label: string; href: string; external?: boolean }[] = [
   { label: "Account", href: "/profile" },
   { label: "Data", href: DATA_URL, external: true },
   { label: "Live", href: "/live" },
+  { label: "Split", href: "/split" },
   { label: "Paper", href: "/paper" },
   { label: "Docs", href: DOCS_URL, external: true },
 ];
@@ -334,6 +335,9 @@ export function SiteFooter() {
             </a>
             <a href="/live" className="hover:text-white">
               Live
+            </a>
+            <a href="/split" className="hover:text-white">
+              Split
             </a>
             <a href="/paper" className="hover:text-white">
               Paper

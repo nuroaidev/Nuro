@@ -61,13 +61,18 @@ export function PrivateInferenceSection() {
         {/* The unsolved one - Private */}
         <Reveal delay={60} variant="left">
           <article className="card glass-panel mt-6 rounded-[1.75rem] border-[rgba(126,214,255,0.18)] p-8 md:p-10">
-            <p className="section-index text-[#7ED6FF]/70">The unsolved one</p>
+            <p className="section-index text-[#7ED6FF]/70">The measured one</p>
             <h3 className="mt-3 text-2xl font-semibold tracking-[-0.02em] text-[#D4F3FF] md:text-3xl">
               Private
             </h3>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-[#a3a3a3]">
-              Everyone claims it. Nobody publishes the number: how much of a
-              prompt is actually recoverable from what a node sees.
+              We published the number. Undefended: 100%. Open-weight
+              obfuscation: 100%. One MPC share: 0.21% — chance is 0.2%. The
+              bound costs 2.42&nbsp;MiB per token. The figure is in{" "}
+              <a href="/paper" className="text-[#7ED6FF] hover:text-white">
+                the Paper
+              </a>
+              .
             </p>
           </article>
         </Reveal>

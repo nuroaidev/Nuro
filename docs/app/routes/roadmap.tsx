@@ -38,7 +38,7 @@ export default function Roadmap() {
 
       <div className="prose-docs">
         <h2 id="now">What is proven now</h2>
-        <Figure caption="Correctness (Gate A) and privacy obfuscation (Gate D) are proven on a CPU harness today. The WAN and cache gates connect them to a production swarm.">
+        <Figure caption="Correctness (Gate A) and open-weight privacy (Gate E) are proven on a CPU harness today. Gate F published the message cost of that bound. The WAN and cache gates connect them to a production swarm.">
           <GateLadder />
         </Figure>
         <ul>
@@ -47,9 +47,14 @@ export default function Roadmap() {
             model, across two processes over the sealed wire.
           </li>
           <li>
-            <strong>Privacy obfuscation (Gate D)</strong> - per-request signed
-            permutation drops untrusted recovery from ~100% to ~0.3% with
-            bit-identical output, on a mini model.
+            <strong>Open-weight privacy (Gate E)</strong> - one MPC share recovers
+            0.21% of the prompt (chance 0.2%). Obfuscation on open weights
+            returns to 100%. Collusion recovers 99.2%. Output agrees 99.6%.
+          </li>
+          <li>
+            <strong>Cost (Gate F)</strong> - that bound costs 2,171 opens and
+            2.42 MiB/token on the toy forward. Public W is free. Private is
+            not fast.
           </li>
           <li>
             <strong>Live product</strong> - single-node native and browser
@@ -60,9 +65,9 @@ export default function Roadmap() {
         <h2 id="engine">Engine roadmap</h2>
         <DefTable
           rows={[
-            { term: "Gate B - WAN", def: "Two machines across the real internet, first correctness receipt with genuine latency." },
+            { term: "Gate B - WAN", def: "Two machines across the real internet. Put the Gate F byte volume on a real RTT. First correctness receipt with genuine latency." },
             { term: "Gate C - Cache", def: "KV cache across the sharded pipeline for fast multi-token decode." },
-            { term: "Gate D at scale", def: "The privacy receipt on production models over WAN, not just the CPU mini model." },
+            { term: "Gate F at scale", def: "Same open-count on Qwen2.5-0.5B, then on the serving path — not just the CPU mini model." },
             { term: "Speed and scale", def: "Speculative decoding, asynchronous pipelining, MoE support, dynamic allocation." },
             { term: "Trustless verification", def: "Stronger attestation than self-reported receipts; verifiable compute." },
           ]}

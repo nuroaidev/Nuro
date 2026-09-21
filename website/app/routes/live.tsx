@@ -35,7 +35,11 @@ export default function LivePage() {
           </h1>
           <p className="mt-6 max-w-xl text-lg leading-relaxed text-[#8a8a8a]">
             A prompt enters machines you do not control. Watch the
-            reconstruction number fall. Then read the receipt.
+            reconstruction number fall. Then read the receipt. Or{" "}
+            <a href="/split" className="text-[#7ED6FF] hover:text-white">
+              split a secret yourself
+            </a>
+            .
           </p>
         </Reveal>
         <Reveal delay={80} variant="scale">

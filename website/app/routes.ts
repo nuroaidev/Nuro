@@ -9,6 +9,7 @@ export default [
   route("treasury", "routes/treasury.tsx"),
   route("paper", "routes/paper.tsx"),
   route("live", "routes/live.tsx"),
+  route("split", "routes/split.tsx"),
   route("profile", "routes/profile.tsx"),
 
   // Server-only resource routes (no UI): the assistant proxy + billing.
