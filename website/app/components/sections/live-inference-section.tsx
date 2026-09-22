@@ -5,7 +5,7 @@ import { Reveal } from "../util/reveal";
 
 export function LiveInferenceSection() {
   return (
-    <section id="live" className="relative border-t border-white/[0.06]">
+    <section id="live" className="relative border-t border-line">
       <div className="page-shell relative section-gap">
         <Reveal>
           <div className="max-w-2xl">
@@ -14,7 +14,7 @@ export function LiveInferenceSection() {
               Watch a request{" "}
               <span className="text-gradient">stay private.</span>
             </h2>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-[#8a8a8a]">
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-mute">
               Entry and exit still see the most. The middle is where volunteers
               sit. This is the leak — and the close — playing in real time.
             </p>
@@ -25,14 +25,14 @@ export function LiveInferenceSection() {
           <LiquidPanel className="mt-12 md:mt-14">
             <div className="p-6 md:p-12">
               <LiveInference />
-              <p className="mt-8 text-[13px] text-[#6f6f6f]">
+              <p className="mt-8 text-[13px] text-mute">
                 Full screen at{" "}
-                <Link to="/live" className="text-[#7ED6FF] hover:text-white">
+                <Link to="/live" className="text-accent hover:text-[var(--fg)]">
                   /live
                 </Link>
                 {" · "}
                 The model is in{" "}
-                <Link to="/paper" className="text-[#7ED6FF] hover:text-white">
+                <Link to="/paper" className="text-accent hover:text-[var(--fg)]">
                   the Paper
                 </Link>
                 .

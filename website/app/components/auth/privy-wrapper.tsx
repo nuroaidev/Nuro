@@ -1,6 +1,16 @@
-import { PrivyProvider } from "@privy-io/react-auth";
+import { PrivyProvider, usePrivy } from "@privy-io/react-auth";
 import { type ReactNode } from "react";
-import { PrivyReadyContext } from "./privy-ready";
+import { useTheme } from "../../lib/theme";
+import { AuthenticatedContext, PrivyReadyContext } from "./privy-ready";
+
+function AuthBridge({ children }: { children: ReactNode }) {
+  const { ready, authenticated } = usePrivy();
+  return (
+    <AuthenticatedContext.Provider value={ready && authenticated}>
+      {children}
+    </AuthenticatedContext.Provider>
+  );
+}
 
 /**
  * Robinhood Chain — the EVM (Arbitrum Orbit L2) network Nuro settles on.
@@ -41,18 +51,23 @@ export default function PrivyWrapper({
   appId: string;
   children: ReactNode;
 }) {
+  const { theme } = useTheme();
+  const light = theme === "light";
+
   return (
     <PrivyReadyContext.Provider value={true}>
       <PrivyProvider
         appId={appId}
         config={{
-          loginMethods: ["email", "google", "twitter", "wallet"],
+          // Must match the Privy dashboard. Requesting a disabled method
+          // (google / twitter) makes login() a no-op and the modal never opens.
+          loginMethods: ["email", "wallet"],
           defaultChain: robinhoodChain,
           supportedChains: [robinhoodChain],
           appearance: {
-            theme: "dark",
-            accentColor: "#7ED6FF",
-            logo: "/brand-mark.png",
+            theme: light ? "light" : "dark",
+            accentColor: light ? "#0a6a88" : "#7ED6FF",
+            logo: "/brand-mark.svg",
             walletChainType: "ethereum-only",
           },
           embeddedWallets: {
@@ -60,7 +75,7 @@ export default function PrivyWrapper({
           },
         }}
       >
-        {children}
+        <AuthBridge>{children}</AuthBridge>
       </PrivyProvider>
     </PrivyReadyContext.Provider>
   );

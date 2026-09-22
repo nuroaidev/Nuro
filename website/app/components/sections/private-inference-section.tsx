@@ -1,34 +1,25 @@
 import { SwarmPipelineIllustration } from "../brand/swarm-pipeline";
 import { LiquidPanel } from "../brand/liquid-glass";
-import { MeshGlyph, UnlockGlyph } from "../brand/glyphs";
+import {
+  BoundIllustration,
+  OpenPathIllustration,
+  SwarmNodesIllustration,
+} from "../brand/privacy-illustrations";
 import { Reveal } from "../util/reveal";
-
-const provenPillars = [
-  {
-    title: "Decentralized",
-    line: "Anyone's GPU, pooled into swarms. No datacenter.",
-    Glyph: MeshGlyph,
-  },
-  {
-    title: "Uncensored",
-    line: "Any model. No content-policy layer in the way.",
-    Glyph: UnlockGlyph,
-  },
-];
 
 export function PrivateInferenceSection() {
   return (
-    <section id="private" className="relative border-t border-white/[0.06]">
-      <div className="page-shell relative pb-16 pt-10 md:pb-24 md:pt-14">
+    <section id="private" className="border-t border-line">
+      <div className="page-shell pb-16 pt-10 md:pb-24 md:pt-14">
         {/* 01 - The problem */}
         <Reveal>
           <div id="problem" className="max-w-3xl scroll-mt-24">
             <p className="section-index">01 / The problem</p>
             <h2 className="mt-4 text-[clamp(2rem,4.5vw,3.25rem)] font-semibold leading-[1.06] tracking-[-0.03em]">
               Sharding solved size.{" "}
-              <span className="text-[#6f6f6f]">Not privacy.</span>
+              <span className="text-mute">Not privacy.</span>
             </h2>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-[#8a8a8a]">
+            <p className="mt-6 max-w-xl text-lg leading-relaxed text-mute">
               Split a model across strangers&apos; GPUs and every node still
               touches raw activations - enough to reconstruct pieces of a prompt.
             </p>
@@ -50,7 +41,7 @@ export function PrivateInferenceSection() {
                 <SwarmPipelineIllustration />
               </div>
 
-              <p className="mt-10 max-w-2xl text-[15px] leading-relaxed text-[#a3a3a3] md:text-base">
+              <p className="mt-10 max-w-2xl text-[15px] leading-relaxed text-mute md:text-base">
                 Every node handles real activation tensors. Nuro exists to
                 quantify that exposure - and close it.
               </p>
@@ -58,54 +49,60 @@ export function PrivateInferenceSection() {
           </LiquidPanel>
         </Reveal>
 
-        {/* The unsolved one - Private */}
         <Reveal delay={60} variant="left">
-          <article className="card glass-panel mt-6 rounded-[1.75rem] border-[rgba(126,214,255,0.18)] p-8 md:p-10">
-            <p className="section-index text-[#7ED6FF]/70">The measured one</p>
-            <h3 className="mt-3 text-2xl font-semibold tracking-[-0.02em] text-[#D4F3FF] md:text-3xl">
-              Private
-            </h3>
-            <p className="mt-4 max-w-xl text-base leading-relaxed text-[#a3a3a3]">
-              We published the number. Undefended: 100%. Open-weight
-              obfuscation: 100%. One MPC share: 0.21% — chance is 0.2%. The
-              bound costs 2.42&nbsp;MiB per token. The figure is in{" "}
-              <a href="/paper" className="text-[#7ED6FF] hover:text-white">
-                the Paper
-              </a>
-              .
-            </p>
+          <article className="card glass-panel mt-6 rounded-[1.75rem] border-[rgba(126,214,255,0.18)] p-6 md:p-10">
+            <div className="grid items-center gap-8 lg:grid-cols-2">
+              <div>
+                <p className="section-index text-accent">The measured one</p>
+                <h3 className="mt-3 font-sans text-2xl font-semibold tracking-[-0.03em] md:text-3xl">
+                  Private
+                </h3>
+                <p className="mt-4 max-w-md text-base leading-relaxed text-mute">
+                  A raw hop still reconstructs the prompt. One MPC share is
+                  noise. The bound costs 2.42&nbsp;MiB per token. The figure is
+                  in{" "}
+                  <a href="/paper" className="text-accent hover:text-[var(--fg)]">
+                    the Paper
+                  </a>
+                  .
+                </p>
+              </div>
+              <BoundIllustration />
+            </div>
           </article>
         </Reveal>
 
-        {/* Proven pillars */}
         <div className="mt-6 grid gap-4 md:grid-cols-2 md:gap-5">
-          {provenPillars.map((pillar, i) => (
-            <Reveal
-              key={pillar.title}
-              delay={i * 60}
-              variant={i === 0 ? "left" : "right"}
-            >
-              <article className="card glass-panel h-full rounded-[1.75rem] p-8 md:p-9">
-                <div className="flex items-center gap-4">
-                  <pillar.Glyph className="h-11 w-11 shrink-0" />
-                  <h3 className="text-xl font-semibold tracking-[-0.02em]">
-                    {pillar.title}
-                  </h3>
-                </div>
-                <p className="mt-4 text-[15px] leading-relaxed text-[#8a8a8a]">
-                  {pillar.line}
-                </p>
-              </article>
-            </Reveal>
-          ))}
+          <Reveal delay={60} variant="left">
+            <article className="card glass-panel flex h-full flex-col rounded-[1.75rem] p-6 md:p-8">
+              <SwarmNodesIllustration />
+              <h3 className="mt-5 font-sans text-xl font-semibold tracking-[-0.03em]">
+                Decentralized
+              </h3>
+              <p className="mt-3 text-[15px] leading-relaxed text-mute">
+                Anyone&apos;s GPU, pooled into swarms. No datacenter.
+              </p>
+            </article>
+          </Reveal>
+          <Reveal delay={120} variant="right">
+            <article className="card glass-panel flex h-full flex-col rounded-[1.75rem] p-6 md:p-8">
+              <OpenPathIllustration />
+              <h3 className="mt-5 font-sans text-xl font-semibold tracking-[-0.03em]">
+                Uncensored
+              </h3>
+              <p className="mt-3 text-[15px] leading-relaxed text-mute">
+                Any model. No content-policy layer in the way.
+              </p>
+            </article>
+          </Reveal>
         </div>
 
         {/* Close */}
         <Reveal variant="fade">
-          <p className="mt-14 max-w-2xl text-lg leading-relaxed text-[#a3a3a3] md:mt-16 md:text-xl">
+          <p className="mt-14 max-w-2xl text-lg leading-relaxed text-mute md:mt-16 md:text-xl">
             Privacy isn&apos;t a feature to bolt on later. It&apos;s the open
             problem - and the one{" "}
-            <span className="text-white">Nuro exists to close.</span>
+            <span className="text-[var(--fg)]">Nuro exists to close.</span>
           </p>
         </Reveal>
       </div>

@@ -34,7 +34,7 @@ export default function AssistantRoute() {
 
 function AssistantBooting() {
   return (
-    <div className="flex min-h-screen flex-col overflow-x-hidden bg-black">
+    <div className="flex min-h-screen flex-col overflow-x-hidden bg-[var(--bg)] text-[var(--fg)]">
       <SiteHeader />
       <main className="page-shell relative flex flex-1 flex-col items-center justify-center pb-10">
         <AssistantMascot />

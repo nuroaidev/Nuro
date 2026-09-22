@@ -16,6 +16,10 @@ export const ROBINHOOD_RPC =
 
 export const ROBINHOOD_EXPLORER = "https://robinhoodchain.blockscout.com";
 
+/** $NURO pair on DexScreener (Robinhood Chain). */
+export const NURO_DEX_URL =
+  "https://dexscreener.com/robinhood/0x3c6c0a1ce3537054f9ed8563a18a16d69db1364b";
+
 /** $NURO ERC-20 on Robinhood Chain (override per-env with VITE_NURO_TOKEN). */
 export const NURO_TOKEN = (
   (import.meta.env.VITE_NURO_TOKEN as string) ||

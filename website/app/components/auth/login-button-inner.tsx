@@ -1,4 +1,4 @@
-import { usePrivy } from "@privy-io/react-auth";
+import { useLogin, usePrivy } from "@privy-io/react-auth";
 
 /**
  * Interactive auth control. Lives in its own module (statically importing the
@@ -7,16 +7,27 @@ import { usePrivy } from "@privy-io/react-auth";
  */
 export default function LoginButtonInner({
   className = "",
+  onBeforeAuth,
 }: {
   className?: string;
+  onBeforeAuth?: () => void;
 }) {
-  const { ready, authenticated, login, logout } = usePrivy();
+  const { ready, authenticated, logout, error } = usePrivy();
+  const { login } = useLogin();
 
   return (
     <button
       type="button"
       disabled={!ready}
-      onClick={() => (authenticated ? logout() : login())}
+      title={error ? error.message : undefined}
+      onClick={() => {
+        onBeforeAuth?.();
+        if (authenticated) {
+          logout();
+          return;
+        }
+        login();
+      }}
       className={className}
     >
       {authenticated ? "Log out" : "Login"}

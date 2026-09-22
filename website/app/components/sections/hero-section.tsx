@@ -2,51 +2,48 @@ import { HeroVisual } from "../brand/hero-visual";
 
 export function HeroSection() {
   return (
-    <section className="relative isolate flex min-h-[74vh] items-center overflow-hidden">
+    <section className="relative isolate flex min-h-[100svh] items-center justify-center overflow-hidden">
       <HeroVisual />
-      <div className="page-shell relative z-10 py-14 md:py-20">
-        <div className="max-w-3xl">
-          <p
-            className="load-rise label-caps"
-            style={{ animationDelay: "0.05s" }}
-          >
-            Private inference network
-          </p>
-          <h1
-            className="load-rise mt-6 text-[clamp(2.75rem,7vw,5.5rem)] font-semibold leading-[0.98] tracking-[-0.035em]"
-            style={{ animationDelay: "0.12s" }}
-          >
-            Private inference,
-            <br />
-            <span className="text-gradient">actually proven.</span>
-          </h1>
-          <p
-            className="load-rise mt-7 max-w-lg text-lg leading-relaxed text-[#a3a3a3] md:text-xl"
-            style={{ animationDelay: "0.2s" }}
-          >
-            Uncensored and decentralized - and the first network built to prove
-            your prompts stay private.
-          </p>
-          <div
-            className="load-rise mt-10 flex flex-wrap gap-4"
-            style={{ animationDelay: "0.28s" }}
-          >
-            <a href="#live" className="btn-primary">
-              Watch a live run
-            </a>
-            <a href="#products" className="btn-secondary">
-              Use the network
-            </a>
-          </div>
+      <div className="page-shell relative z-10 w-full py-24 text-center">
+        <p
+          className="load-rise label-caps"
+          style={{ animationDelay: "0.05s" }}
+        >
+          Private inference network
+        </p>
+        <h1
+          className="hero-title load-rise mx-auto mt-6 font-semibold"
+          style={{ animationDelay: "0.12s" }}
+        >
+          <span className="hero-title-line">The model is public.</span>
+          <span className="hero-title-line">
+            The prompt is <span className="text-gradient">not.</span>
+          </span>
+        </h1>
+        <p
+          className="load-rise mx-auto mt-8 max-w-xl text-lg leading-relaxed text-mute md:text-xl"
+          style={{ animationDelay: "0.2s" }}
+        >
+          Uncensored and decentralized — the first network built to prove an
+          untrusted node cannot recover what you typed.
+        </p>
+        <div
+          className="load-rise mt-10 flex flex-wrap justify-center gap-4"
+          style={{ animationDelay: "0.28s" }}
+        >
+          <a href="/paper" className="btn-primary">
+            Read the paper
+          </a>
+          <a href="#products" className="btn-secondary">
+            Use the network
+          </a>
         </div>
-      </div>
-
-      {/* Scroll cue */}
-      <div
-        className="load-fade absolute bottom-8 left-1/2 z-10 hidden -translate-x-1/2 md:block"
-        style={{ animationDelay: "0.5s" }}
-      >
-        <span className="label-caps animate-float">scroll</span>
+        <p
+          className="load-fade mt-16 font-mono text-[11px] uppercase tracking-[0.22em] text-mute"
+          style={{ animationDelay: "0.55s" }}
+        >
+          Share lattice · Game of Life
+        </p>
       </div>
     </section>
   );

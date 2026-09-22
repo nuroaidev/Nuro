@@ -7,7 +7,13 @@ import { createContext, useContext } from "react";
  * of the SSR server bundle.
  */
 export const PrivyReadyContext = createContext(false);
+export const AuthenticatedContext = createContext(false);
 
 export function usePrivyReady(): boolean {
   return useContext(PrivyReadyContext);
+}
+
+/** False on SSR and until Privy is ready. True only after a real login. */
+export function useAuthenticated(): boolean {
+  return useContext(AuthenticatedContext);
 }

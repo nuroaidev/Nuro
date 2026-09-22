@@ -27,16 +27,206 @@
 
 html {
   scroll-behavior: smooth;
+  --bg: #000000;
+  --fg: #ffffff;
+  --mute: #8a8a8a;
+  --mute-soft: #5c5c5c;
+  --line: rgba(255, 255, 255, 0.08);
+  --panel: rgba(255, 255, 255, 0.03);
+  --nav-bg: rgba(0, 0, 0, 0.72);
+  --life-cell: rgba(126, 214, 255, 0.5);
+  --accent: #7ed6ff;
+  --inset: rgba(255, 255, 255, 0.035);
+  --stipple-ink: rgba(255, 255, 255, 0.55);
+  --faq-bg: #f3efe6;
+  --faq-fg: #0c0c0c;
+  --faq-mute: #5c5c5c;
+  --faq-line: rgba(12, 12, 12, 0.12);
+  --hero-scrim: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.15) 0%,
+    rgba(0, 0, 0, 0.55) 70%,
+    #000 100%
+  );
+  color-scheme: dark;
+}
+
+html[data-theme="light"] {
+  --bg: #f3efe6;
+  --fg: #0c0c0c;
+  --mute: #5c5c5c;
+  --mute-soft: #7a7a7a;
+  --line: rgba(12, 12, 12, 0.1);
+  --panel: rgba(255, 255, 255, 0.55);
+  --nav-bg: rgba(243, 239, 230, 0.82);
+  --life-cell: rgba(12, 12, 12, 0.22);
+  --accent: #0a6a88;
+  --inset: rgba(12, 12, 12, 0.04);
+  --stipple-ink: rgba(12, 12, 12, 0.78);
+  --faq-bg: #0c0c0c;
+  --faq-fg: #f3efe6;
+  --faq-mute: #9a9a9a;
+  --faq-line: rgba(243, 239, 230, 0.12);
+  --hero-scrim: linear-gradient(
+    180deg,
+    rgba(243, 239, 230, 0.2) 0%,
+    rgba(243, 239, 230, 0.72) 62%,
+    #f3efe6 100%
+  );
+  color-scheme: light;
 }
 
 html,
 body {
-  @apply bg-black text-white antialiased;
-  color-scheme: dark;
+  background: var(--bg);
+  color: var(--fg);
   font-family: var(--font-sans);
   overflow-x: hidden;
   width: 100%;
   max-width: 100%;
+  @apply antialiased;
+}
+
+/* Do not set z-index on #privy-dialog-backdrop — it is position:fixed and
+   a forced z-index stacks it on top of the dialog, so the card looks blurred
+   and cannot be clicked. Privy's own wrapper is already z-index 999999. */
+html:has(#privy-dialog-backdrop),
+body:has(#privy-dialog-backdrop) {
+  overflow: visible !important;
+}
+
+#privy-modal-content {
+  font-family: var(--font-sans) !important;
+}
+
+#privy-modal-content h1,
+#privy-modal-content h2,
+#privy-modal-content h3,
+#privy-modal-content h4 {
+  font-family: var(--font-sans) !important;
+  letter-spacing: normal !important;
+}
+
+html[data-theme="light"] #privy-modal-content img[src*="brand-mark"] {
+  filter: invert(1);
+}
+
+html[data-theme="light"] .brand-mark {
+  filter: invert(1);
+}
+
+html[data-theme="light"] .faq-close .brand-mark {
+  filter: none;
+}
+
+html:not([data-theme="light"]) .faq-close .brand-mark {
+  filter: invert(1);
+}
+
+.faq-close {
+  background: var(--faq-bg);
+  color: var(--faq-fg);
+  --stipple-ink: rgba(243, 239, 230, 0.42);
+}
+
+html:not([data-theme="light"]) .faq-close {
+  --stipple-ink: rgba(12, 12, 12, 0.5);
+}
+
+.faq-close .text-mute,
+.faq-close .faq-a,
+.faq-close .faq-plus {
+  color: var(--faq-mute);
+}
+
+.faq-close .faq-row {
+  border-color: var(--faq-line);
+}
+
+.faq-close .text-accent {
+  color: var(--faq-fg);
+}
+
+html[data-theme="light"] .text-gradient {
+  background: linear-gradient(104deg, #0c0c0c 0%, #1a3d4d 48%, #0a7a9c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+html[data-theme="light"] .btn-primary {
+  background: #0c0c0c;
+  color: #f3efe6;
+}
+
+html[data-theme="light"] .btn-primary:hover {
+  background: #222;
+}
+
+html[data-theme="light"] .btn-secondary {
+  color: #0c0c0c;
+  border-color: rgba(12, 12, 12, 0.22);
+}
+
+html[data-theme="light"] .btn-secondary:hover {
+  border-color: rgba(12, 12, 12, 0.4);
+  background: rgba(12, 12, 12, 0.04);
+}
+
+html[data-theme="light"] .glass-panel {
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.7) 0%,
+    rgba(255, 255, 255, 0.35) 100%
+  );
+  border-color: rgba(12, 12, 12, 0.1);
+}
+
+html[data-theme="light"] .label-caps,
+html[data-theme="light"] .section-index {
+  color: #6a6a6a;
+}
+
+html[data-theme="light"] .glass-tag-neutral {
+  border-color: rgba(12, 12, 12, 0.12);
+  background: rgba(12, 12, 12, 0.04);
+  color: rgba(12, 12, 12, 0.68);
+}
+
+html[data-theme="light"] .glass-tag {
+  color: #0a6a88;
+  border-color: rgba(10, 106, 136, 0.28);
+  background: rgba(10, 106, 136, 0.06);
+}
+
+html[data-theme="light"] ::selection {
+  background: rgba(10, 106, 136, 0.18);
+  color: #0c0c0c;
+}
+
+html[data-theme="light"] .nav-dropdown-link:hover {
+  background: rgba(12, 12, 12, 0.05);
+}
+
+.hero-scrim {
+  background: var(--hero-scrim);
+}
+
+.text-mute {
+  color: var(--mute);
+}
+
+.text-accent {
+  color: var(--accent);
+}
+
+.border-line {
+  border-color: var(--line);
+}
+
+.inset-panel {
+  border: 1px solid var(--line);
+  background: var(--inset);
 }
 
 ::selection {
@@ -70,6 +260,211 @@ h4 {
 
 .section-index {
   @apply text-[11px] font-medium uppercase tracking-[0.2em] text-[#5c5c5c];
+}
+
+.hero-title {
+  font-size: clamp(2.4rem, 6.2vw, 5.75rem);
+  line-height: 1.18;
+  letter-spacing: 0.06em;
+}
+
+.hero-title-line {
+  display: block;
+  white-space: nowrap;
+}
+
+@media (max-width: 420px) {
+  .hero-title {
+    font-size: 1.7rem;
+  }
+}
+
+.os-field {
+  background-color: var(--bg);
+  border-top: 1px solid var(--line);
+}
+
+.os-field-noise {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.os-window {
+  border: 1px solid var(--fg);
+  background: var(--bg);
+}
+
+.os-window-featured {
+  box-shadow: 3px 3px 0 color-mix(in srgb, var(--fg) 10%, transparent);
+}
+
+.os-window-bar {
+  background: var(--fg);
+  color: var(--bg);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  padding: 0.28rem 0.55rem;
+}
+
+.os-window-featured .os-window-bar {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+html[data-theme="light"] .os-window-featured .os-window-bar {
+  color: #f3efe6;
+}
+
+.os-window-body {
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+  line-height: 1.45;
+  padding: 0.55rem 0.65rem;
+}
+
+.os-window-body a {
+  color: var(--accent);
+}
+
+.os-window-body a:hover {
+  color: var(--fg);
+}
+
+.os-table {
+  display: grid;
+  gap: 0.35rem;
+}
+
+.os-table-row {
+  display: grid;
+  grid-template-columns: 4.4rem 3.4rem minmax(3rem, 1fr) 4rem 5rem;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 10px;
+}
+
+.os-table-id {
+  letter-spacing: 0.08em;
+}
+
+.os-table-bar {
+  display: block;
+  height: 3px;
+  background: color-mix(in srgb, var(--fg) 12%, transparent);
+}
+
+.os-table-bar i {
+  display: block;
+  height: 100%;
+  background: var(--fg);
+}
+
+.os-table-row.is-accent .os-table-bar i {
+  background: var(--accent);
+}
+
+.bound-illust {
+  min-width: 0;
+}
+
+.bound-ladder {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 0.85rem;
+}
+
+.bound-ladder-row {
+  display: grid;
+  grid-template-columns: 6.2rem minmax(3rem, 1fr) 3.2rem;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+  color: var(--mute);
+}
+
+.bound-ladder-row.is-accent {
+  color: var(--accent);
+}
+
+.bound-ladder-id {
+  letter-spacing: 0.1em;
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  align-items: start;
+  margin-top: 3.5rem;
+}
+
+@media (min-width: 768px) {
+  .faq-grid {
+    grid-template-columns: 1fr 1fr;
+    column-gap: 4rem;
+    margin-top: 4.5rem;
+  }
+}
+
+.faq-col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.faq-row {
+  border-bottom: 1px solid var(--line);
+}
+
+.faq-q {
+  display: flex;
+  width: 100%;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.45rem 0;
+  text-align: left;
+  font-size: 1.2rem;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  background: none;
+  border: 0;
+  color: inherit;
+  cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .faq-q {
+    font-size: 1.45rem;
+    padding: 1.7rem 0;
+  }
+}
+
+.faq-plus {
+  flex-shrink: 0;
+  margin-top: 0.15em;
+  font-size: 1.35rem;
+  line-height: 1;
+  color: var(--mute);
+}
+
+.faq-a {
+  padding: 0 2rem 1.45rem 0;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: var(--mute);
+}
+
+@media (min-width: 768px) {
+  .faq-a {
+    font-size: 1.15rem;
+    padding-bottom: 1.7rem;
+  }
 }
 
 .glass-tag {

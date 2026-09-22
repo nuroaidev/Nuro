@@ -162,17 +162,17 @@ export function LiveInference() {
         </div>
       </div>
 
-      <p className="mt-4 max-w-2xl text-[14px] leading-relaxed text-[#8a8a8a] md:text-[15px]">
+      <p className="mt-4 max-w-2xl text-[14px] leading-relaxed text-mute md:text-[15px]">
         Simulation of the measured gates — not a production receipt. Watch a
         prompt cross four shards, then see raw recovery collapse to chance on a
         single MPC share.
       </p>
 
-      <div className="mt-8 rounded-2xl border border-white/[0.06] bg-black/40 p-4 md:p-5">
-        <p className="text-[11px] uppercase tracking-[0.18em] text-[#5c5c5c]">
+      <div className="inset-panel mt-8 rounded-2xl p-4 md:p-5">
+        <p className="text-[11px] uppercase tracking-[0.18em] text-mute">
           Prompt
         </p>
-        <p className="mt-2 font-mono text-sm text-[#D4F3FF] md:text-[15px]">
+        <p className="mt-2 font-mono text-sm text-accent md:text-[15px]">
           {run.prompt}
         </p>
       </div>
@@ -180,7 +180,7 @@ export function LiveInference() {
       <div className="mt-8">
         <div className="relative grid grid-cols-2 gap-3 md:grid-cols-4 md:gap-4">
           <div
-            className="pointer-events-none absolute top-[34px] right-6 left-6 hidden h-px bg-white/[0.08] md:block"
+            className="pointer-events-none absolute top-[34px] right-6 left-6 hidden h-px bg-[var(--line)] md:block"
             aria-hidden
           />
           <div
@@ -205,7 +205,7 @@ export function LiveInference() {
                 className={`relative rounded-2xl border p-4 transition-colors duration-500 ${
                   active
                     ? "border-[#7ED6FF]/35 bg-[#7ED6FF]/[0.06]"
-                    : "border-white/[0.06] bg-black/30"
+                    : "border-line bg-[var(--inset)]"
                 }`}
               >
                 <div
@@ -213,16 +213,16 @@ export function LiveInference() {
                     node.trust === "operator" ? "bg-[#F4E6C9]" : "bg-[#7ED6FF]"
                   } ${active ? "shadow-[0_0_14px_rgba(126,214,255,0.7)]" : "opacity-30"}`}
                 />
-                <p className="mt-3 text-[11px] uppercase tracking-[0.16em] text-[#8a8a8a]">
+                <p className="mt-3 text-[11px] uppercase tracking-[0.16em] text-mute">
                   {node.label}
                 </p>
-                <p className="mt-1 font-mono text-[11px] text-[#5c5c5c]">
+                <p className="mt-1 font-mono text-[11px] text-mute">
                   layers {node.layers}
                 </p>
-                <p className="mt-3 font-mono text-xl tabular-nums text-white">
+                <p className="mt-3 font-mono text-xl tabular-nums text-[var(--fg)]">
                   {active ? fmtPct(recovery) : "—"}
                 </p>
-                <p className="mt-1 text-[11px] text-[#6f6f6f]">
+                <p className="mt-1 text-[11px] text-mute">
                   {defending
                     ? "one share · chance"
                     : active
@@ -236,13 +236,13 @@ export function LiveInference() {
       </div>
 
       <div className="mt-6 grid gap-4 lg:grid-cols-5">
-        <div className="rounded-2xl border border-white/[0.06] bg-black/40 p-5 lg:col-span-3">
-          <p className="text-[11px] uppercase tracking-[0.18em] text-[#5c5c5c]">
+        <div className="inset-panel rounded-2xl p-5 lg:col-span-3">
+          <p className="text-[11px] uppercase tracking-[0.18em] text-mute">
             Output
           </p>
-          <p className="mt-3 min-h-[7.5rem] text-[15px] leading-relaxed text-[#d4d4d4]">
+          <p className="mt-3 min-h-[7.5rem] text-[15px] leading-relaxed text-[var(--fg)]/85">
             {typedOut || (
-              <span className="text-[#5c5c5c]">
+              <span className="text-mute">
                 Waiting for the tail to decode…
               </span>
             )}
@@ -252,8 +252,8 @@ export function LiveInference() {
           </p>
         </div>
 
-        <div className="rounded-2xl border border-white/[0.06] bg-black/40 p-5 lg:col-span-2">
-          <p className="text-[11px] uppercase tracking-[0.18em] text-[#5c5c5c]">
+        <div className="inset-panel rounded-2xl p-5 lg:col-span-2">
+          <p className="text-[11px] uppercase tracking-[0.18em] text-mute">
             Privacy receipt
           </p>
           {receiptReady ? (
@@ -265,7 +265,7 @@ export function LiveInference() {
               <Row k="defense" v="2-party MPC" />
             </dl>
           ) : (
-            <p className="mt-3 text-[14px] text-[#5c5c5c]">
+            <p className="mt-3 text-[14px] text-mute">
               Issued when the tail emits the last token.
             </p>
           )}
@@ -286,8 +286,8 @@ function Row({
 }) {
   return (
     <div className="flex items-baseline justify-between gap-3">
-      <dt className="text-[#5c5c5c]">{k}</dt>
-      <dd className={accent ? "text-[#5ce6a5]" : "text-[#c9c9c9]"}>{v}</dd>
+      <dt className="text-mute">{k}</dt>
+      <dd className={accent ? "text-[#5ce6a5]" : "text-[var(--fg)]"}>{v}</dd>
     </div>
   );
 }

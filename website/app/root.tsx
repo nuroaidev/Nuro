@@ -11,6 +11,7 @@ import type { Route } from "./+types/root";
 import "./app.css";
 import { LiquidGlassDefs } from "./components/brand/liquid-glass";
 import { AuthProvider } from "./components/auth/auth-provider";
+import { THEME_BOOT, ThemeProvider } from "./lib/theme";
 
 export const links: Route.LinksFunction = () => [
   { rel: "icon", href: "/favicon.png", type: "image/png" },
@@ -24,10 +25,11 @@ export const links: Route.LinksFunction = () => [
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" data-theme="light">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <script dangerouslySetInnerHTML={{ __html: THEME_BOOT }} />
         {/* Social preview (Open Graph + Twitter) */}
         <meta property="og:type" content="website" />
         <meta property="og:site_name" content="Nuro AI" />
@@ -51,9 +53,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
   return (
-    <AuthProvider>
-      <Outlet />
-    </AuthProvider>
+    <ThemeProvider>
+      <AuthProvider>
+        <Outlet />
+      </AuthProvider>
+    </ThemeProvider>
   );
 }
 
@@ -74,7 +78,7 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   return (
     <main className="page-shell section-gap">
       <h1 className="text-3xl font-semibold">{message}</h1>
-      <p className="mt-4 text-[#8a8a8a]">{details}</p>
+      <p className="mt-4 text-mute">{details}</p>
     </main>
   );
 }

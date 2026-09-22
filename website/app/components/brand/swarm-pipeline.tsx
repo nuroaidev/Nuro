@@ -42,10 +42,10 @@ export function SwarmPipelineIllustration() {
         ))}
 
         {/* End labels */}
-        <text x="44" y={cy + 4} fill="#5c5c5c" fontSize="11" letterSpacing="0.14em">
+        <text x="44" y={cy + 4} fill="var(--mute)" fontSize="11" letterSpacing="0.14em">
           prompt
         </text>
-        <text x="1006" y={cy + 4} fill="#5c5c5c" fontSize="11" letterSpacing="0.14em" textAnchor="end">
+        <text x="1006" y={cy + 4} fill="var(--mute)" fontSize="11" letterSpacing="0.14em" textAnchor="end">
           output
         </text>
 
@@ -55,7 +55,7 @@ export function SwarmPipelineIllustration() {
             <text
               x={cx[i]}
               y={cy + r + 30}
-              fill={node.warm ? "#F4E6C9" : "#ffffff"}
+              fill="currentColor"
               fontSize="12.5"
               fontWeight="500"
               textAnchor="middle"
@@ -67,7 +67,7 @@ export function SwarmPipelineIllustration() {
             <text
               x={cx[i]}
               y={cy + r + 48}
-              fill="#5c5c5c"
+              fill="var(--mute)"
               fontSize="10.5"
               textAnchor="middle"
               letterSpacing="0.08em"

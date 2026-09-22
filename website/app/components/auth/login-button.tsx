@@ -9,7 +9,13 @@ const LoginButtonInner = lazy(() => import("./login-button-inner"));
  * Nav auth control. Renders a static button during SSR / before Privy mounts,
  * then swaps to the interactive Privy sign-in/out control on the client.
  */
-export function LoginButton({ className = "" }: { className?: string }) {
+export function LoginButton({
+  className = "",
+  onBeforeAuth,
+}: {
+  className?: string;
+  onBeforeAuth?: () => void;
+}) {
   const ready = usePrivyReady();
 
   const placeholder = (
@@ -22,7 +28,7 @@ export function LoginButton({ className = "" }: { className?: string }) {
 
   return (
     <Suspense fallback={placeholder}>
-      <LoginButtonInner className={className} />
+      <LoginButtonInner className={className} onBeforeAuth={onBeforeAuth} />
     </Suspense>
   );
 }

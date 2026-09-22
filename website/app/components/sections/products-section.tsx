@@ -39,8 +39,8 @@ const products = [
 
 export function ProductsSection() {
   return (
-    <section id="products" className="relative border-t border-white/[0.06]">
-      <div className="page-shell relative section-gap">
+    <section id="products" className="border-t border-line">
+      <div className="page-shell section-gap">
         <Reveal>
           <div className="max-w-2xl">
             <p className="section-index">04 / Product</p>
@@ -75,16 +75,16 @@ export function ProductsSection() {
                 <h3 className="mt-8 text-xl font-semibold tracking-[-0.02em]">
                   {product.title}
                 </h3>
-                <p className="mt-3 flex-1 text-[15px] leading-relaxed text-[#8a8a8a]">
+                <p className="mt-3 flex-1 text-[15px] leading-relaxed text-mute">
                   {product.line}
                 </p>
 
-                <p className="mt-6 text-sm font-medium text-[#D4F3FF]">
+                <p className="mt-6 text-sm font-medium text-accent">
                   {product.rate}
                 </p>
 
                 {product.command ? (
-                  <pre className="mt-4 overflow-hidden rounded-2xl border border-white/[0.06] bg-black/40 p-4 text-xs leading-relaxed whitespace-pre-wrap break-all text-[#a3a3a3]">
+                  <pre className="inset-panel mt-4 overflow-hidden rounded-2xl p-4 text-xs leading-relaxed whitespace-pre-wrap break-all text-mute">
                     <code>{product.command}</code>
                   </pre>
                 ) : null}

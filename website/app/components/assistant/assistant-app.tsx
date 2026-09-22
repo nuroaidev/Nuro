@@ -193,7 +193,7 @@ export default function AssistantApp() {
   const locked = !authenticated;
 
   return (
-    <div className="flex min-h-screen flex-col overflow-x-hidden bg-black">
+    <div className="flex min-h-screen flex-col overflow-x-hidden bg-[var(--bg)] text-[var(--fg)]">
       <SiteHeader />
       <main className="page-shell relative flex flex-1 flex-col pt-6 pb-6">
         {/* status bar */}
@@ -218,7 +218,7 @@ export default function AssistantApp() {
           <div className="flex flex-1 flex-col items-center justify-center pb-6">
             <AssistantMascot />
             <h1 className="mt-7 text-center text-[clamp(1.8rem,4vw,2.6rem)] font-semibold leading-[1.05] tracking-[-0.03em]">
-              <span className="text-white">Sign in to chat</span>
+              <span>Sign in to chat</span>
               <br />
               <span className="text-gradient">with Nuro</span>
             </h1>
