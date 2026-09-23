@@ -54,14 +54,14 @@ export function ShareSplit() {
           </h3>
         </div>
       </div>
-      <p className="mt-4 max-w-2xl text-[14px] leading-relaxed text-[#8a8a8a] md:text-[15px]">
+      <p className="mt-4 max-w-2xl text-[14px] leading-relaxed text-mute md:text-[15px]">
         Type a secret. We XOR-split the UTF-8 bytes in your browser. Each
         share is uniform noise — the same information theory as one MPC
         activation share. This is the primitive, not a production receipt.
       </p>
 
       <label className="mt-8 block">
-        <span className="text-[11px] uppercase tracking-[0.18em] text-[#5c5c5c]">
+        <span className="text-[11px] uppercase tracking-[0.18em] text-[var(--mute-soft)]">
           Your prompt
         </span>
         <textarea
@@ -69,7 +69,7 @@ export function ShareSplit() {
           maxLength={MAX}
           onChange={(e) => setDraft(e.target.value)}
           rows={3}
-          className="mt-2 w-full resize-none rounded-2xl border border-white/[0.08] bg-black/50 px-4 py-3 font-mono text-sm text-[#D4F3FF] outline-none focus:border-[#7ED6FF]/40"
+          className="mt-2 w-full resize-none rounded-2xl border border-line bg-[var(--inset)] px-4 py-3 font-mono text-sm text-accent outline-none focus:border-[#7ED6FF]/40"
         />
       </label>
       <div className="mt-3 flex flex-wrap items-center gap-2">
@@ -82,7 +82,7 @@ export function ShareSplit() {
               setShares(null);
               setCollude(false);
             }}
-            className="rounded-full border border-white/[0.08] px-3 py-1 text-[11px] text-[#8a8a8a] hover:border-white/25 hover:text-white"
+            className="rounded-full border border-line px-3 py-1 text-[11px] text-mute hover:border-[var(--fg)]/25 hover:text-[var(--fg)]"
           >
             {s.length > 36 ? `${s.slice(0, 34)}…` : s}
           </button>
@@ -122,8 +122,8 @@ export function ShareSplit() {
             />
           </div>
 
-          <div className="mt-4 rounded-2xl border border-white/[0.06] bg-black/40 p-5">
-            <p className="text-[11px] uppercase tracking-[0.18em] text-[#5c5c5c]">
+          <div className="mt-4 rounded-2xl border border-line bg-[var(--inset)] p-5">
+            <p className="text-[11px] uppercase tracking-[0.18em] text-[var(--mute-soft)]">
               Adversary view
             </p>
             {collude && revealed !== null ? (
@@ -131,13 +131,13 @@ export function ShareSplit() {
                 <p className="mt-3 font-mono text-sm text-[#5ce6a5] md:text-[15px]">
                   {revealed}
                 </p>
-                <p className="mt-2 text-[13px] text-[#8a8a8a]">
+                <p className="mt-2 text-[13px] text-mute">
                   Both shares combined. Recovery 100%. Privacy lives in
                   non-collusion.
                 </p>
               </>
             ) : (
-              <p className="mt-3 text-[14px] text-[#6f6f6f]">
+              <p className="mt-3 text-[14px] text-mute">
                 One share is empty. Copy either hex dump and try to read the
                 sentence. You cannot.
               </p>
@@ -164,29 +164,29 @@ function ShareCard({
 }) {
   const garbage = asLatin1(bytes);
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-black/40 p-5">
+    <div className="rounded-2xl border border-line bg-[var(--inset)] p-5">
       <div className="flex items-baseline justify-between gap-3">
         <div>
-          <p className="text-[11px] uppercase tracking-[0.18em] text-[#8a8a8a]">
+          <p className="text-[11px] uppercase tracking-[0.18em] text-mute">
             {title}
           </p>
-          <p className="mt-1 font-mono text-[11px] text-[#5c5c5c]">{subtitle}</p>
+          <p className="mt-1 font-mono text-[11px] text-[var(--mute-soft)]">{subtitle}</p>
         </div>
         <button
           type="button"
           onClick={onCopy}
-          className="text-[11px] text-[#7ED6FF] hover:text-white"
+          className="text-[11px] text-accent hover:text-[var(--fg)]"
         >
           {copied ? "Copied" : "Copy hex"}
         </button>
       </div>
-      <p className="mt-4 break-all font-mono text-[13px] leading-relaxed text-[#d4d4d4]">
+      <p className="mt-4 break-all font-mono text-[13px] leading-relaxed text-[var(--fg)]/75">
         {garbage}
       </p>
-      <p className="mt-3 break-all font-mono text-[11px] text-[#5c5c5c]">
+      <p className="mt-3 break-all font-mono text-[11px] text-[var(--mute-soft)]">
         {hexPreview(bytes, 64)}
       </p>
-      <p className="mt-3 text-[12px] text-[#6f6f6f]">
+      <p className="mt-3 text-[12px] text-mute">
         Decoded as latin-1. It is not your prompt. It is a mask.
       </p>
     </div>

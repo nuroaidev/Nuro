@@ -33,10 +33,10 @@ export default function EarnRoute() {
 
 function EarnBooting() {
   return (
-    <div className="min-h-screen overflow-x-hidden bg-black">
+    <div className="page-root">
       <SiteHeader />
       <main className="page-shell relative flex min-h-[50vh] items-center justify-center pt-20 pb-24">
-        <p className="text-sm text-[#8a8a8a]">Loading…</p>
+        <p className="text-sm text-mute">Loading…</p>
       </main>
       <SiteFooter />
     </div>

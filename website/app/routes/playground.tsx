@@ -118,7 +118,7 @@ export default function PlaygroundPage() {
   }, []);
 
   return (
-    <div className="flex min-h-screen flex-col overflow-x-hidden bg-black">
+    <div className="page-root flex flex-col">
       <SiteHeader />
       <main className="page-shell relative flex flex-1 flex-col pt-20 pb-24 md:pt-24">
         <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
@@ -127,7 +127,7 @@ export default function PlaygroundPage() {
             <h1 className="mt-4 text-[clamp(2rem,4.5vw,3.25rem)] font-semibold leading-[1.02] tracking-[-0.03em]">
               <span className="text-gradient">Playground</span>
             </h1>
-            <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-[#8a8a8a]">
+            <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-mute">
               A chat agent running on the network. Every reply is streamed from a
               contributed GPU through the public API.
             </p>
@@ -136,7 +136,7 @@ export default function PlaygroundPage() {
 
         {/* API key bar */}
         <div className="mt-8 glass-panel rounded-[1.5rem] p-5 md:p-6">
-          <label className="text-[13px] text-[#6f6f6f]">API key</label>
+          <label className="text-[13px] text-mute">API key</label>
           <div className="mt-2 flex flex-col gap-3 sm:flex-row">
             <input
               value={keyDraft}
@@ -144,7 +144,7 @@ export default function PlaygroundPage() {
               placeholder="nvqsk_…"
               spellCheck={false}
               type="password"
-              className="w-full rounded-2xl border border-white/[0.08] bg-black/40 px-4 py-3 font-mono text-sm text-white outline-none placeholder:text-[#4a4a4a]"
+              className="w-full rounded-2xl border border-line bg-[var(--inset)] px-4 py-3 font-mono text-sm text-[var(--fg)] outline-none placeholder:text-[var(--mute-soft)]"
             />
             <button
               type="button"
@@ -155,11 +155,11 @@ export default function PlaygroundPage() {
             </button>
           </div>
           {!apiKey && (
-            <p className="mt-3 text-[13px] text-[#8a8a8a]">
+            <p className="mt-3 text-[13px] text-mute">
               Need a key? Create one on the{" "}
               <Link
                 to="/earn"
-                className="text-[#D4F3FF] underline-offset-4 hover:underline"
+                className="text-accent underline-offset-4 hover:underline"
               >
                 earn page
               </Link>
@@ -171,12 +171,12 @@ export default function PlaygroundPage() {
         {/* Conversation */}
         <div
           ref={scrollRef}
-          className="mt-6 flex-1 space-y-4 overflow-y-auto rounded-[1.5rem] border border-white/[0.06] bg-black/30 p-5 md:p-7"
+          className="mt-6 flex-1 space-y-4 overflow-y-auto rounded-[1.5rem] border border-line bg-[var(--inset)] p-5 md:p-7"
           style={{ minHeight: "38vh" }}
         >
           {turns.length === 0 ? (
             <div className="flex h-full min-h-[30vh] items-center justify-center text-center">
-              <p className="max-w-sm text-sm text-[#6f6f6f]">
+              <p className="max-w-sm text-sm text-mute">
                 {apiKey
                   ? "Ask anything. Responses stream token-by-token from an online worker."
                   : "Add an API key above to start chatting with the network."}
@@ -203,7 +203,7 @@ export default function PlaygroundPage() {
             rows={1}
             disabled={!apiKey}
             placeholder={apiKey ? "Message the network…" : "Add an API key first"}
-            className="min-h-[52px] max-h-40 w-full resize-y rounded-2xl border border-white/[0.08] bg-black/40 px-4 py-3.5 text-sm text-white outline-none placeholder:text-[#4a4a4a] disabled:opacity-50"
+            className="min-h-[52px] max-h-40 w-full resize-y rounded-2xl border border-line bg-[var(--inset)] px-4 py-3.5 text-sm text-[var(--fg)] outline-none placeholder:text-[var(--mute-soft)] disabled:opacity-50"
           />
           {streaming ? (
             <button
@@ -229,7 +229,7 @@ export default function PlaygroundPage() {
           <button
             type="button"
             onClick={reset}
-            className="mt-3 self-start text-xs text-[#6f6f6f] hover:text-[#8a8a8a]"
+            className="mt-3 self-start text-xs text-mute hover:text-[var(--fg)]"
           >
             Clear conversation
           </button>
@@ -247,14 +247,14 @@ function Bubble({ turn }: { turn: Turn }) {
       <div
         className={`max-w-[85%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
           isUser
-            ? "bg-white/[0.08] text-white"
-            : "border border-white/[0.06] bg-black/40 text-[#c9c9c9]"
+            ? "bg-[var(--inset)] text-[var(--fg)]"
+            : "border border-line bg-[var(--inset)] text-[var(--fg)]/70"
         }`}
       >
         {turn.content ? (
           <span className="whitespace-pre-wrap">{turn.content}</span>
         ) : (
-          <span className="inline-flex gap-1 text-[#7ED6FF]">
+          <span className="inline-flex gap-1 text-accent">
             <span className="animate-pulse">●</span>
           </span>
         )}

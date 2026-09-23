@@ -24,7 +24,7 @@ export function meta({}: Route.MetaArgs) {
 
 export default function SplitPage() {
   return (
-    <div className="min-h-screen overflow-x-hidden bg-black">
+    <div className="page-root">
       <SiteHeader />
       <main className="page-shell relative pt-20 pb-28 md:pt-28">
         <Reveal>
@@ -34,7 +34,7 @@ export default function SplitPage() {
             <br />
             <span className="text-gradient">actually holds.</span>
           </h1>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-[#8a8a8a]">
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-mute">
             Not a policy. A split. One share is uniformly random. Two shares
             are the prompt. Same fact as the paper — you can touch it.
           </p>
@@ -44,14 +44,14 @@ export default function SplitPage() {
             <ShareSplit />
           </div>
         </Reveal>
-        <p className="mt-8 max-w-2xl text-[13px] leading-relaxed text-[#6f6f6f]">
+        <p className="mt-8 max-w-2xl text-[13px] leading-relaxed text-mute">
           The measured gates share hidden states, not typed bytes. The
           invariant is the same: a single share carries no information.{" "}
-          <Link to="/paper" className="text-[#7ED6FF] hover:text-white">
+          <Link to="/paper" className="text-accent hover:text-[var(--fg)]">
             The Paper
           </Link>
           {" · "}
-          <Link to="/live" className="text-[#7ED6FF] hover:text-white">
+          <Link to="/live" className="text-accent hover:text-[var(--fg)]">
             Live run
           </Link>
           .

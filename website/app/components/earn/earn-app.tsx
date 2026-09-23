@@ -53,7 +53,7 @@ export default function EarnApp() {
   const online = (stats?.workersOnline ?? 0) > 0;
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-black">
+    <div className="page-root">
       <SiteHeader />
       <main className="page-shell relative pt-20 pb-24 md:pt-24">
         {/* Header */}
@@ -114,7 +114,7 @@ export default function EarnApp() {
             <h2 className="mt-4 text-[clamp(1.75rem,3.5vw,2.5rem)] font-semibold leading-tight tracking-[-0.02em]">
               Two ways to contribute
             </h2>
-            <p className="mt-4 text-[15px] leading-relaxed text-[#8a8a8a] md:text-base">
+            <p className="mt-4 text-[15px] leading-relaxed text-mute md:text-base">
               You earn USDG for time online and for every job you serve.
               Withdrawals queue to your Robinhood wallet and settle once the
               paymaster vault is funded. Native serves the largest models;
@@ -147,10 +147,10 @@ export default function EarnApp() {
             <h2 className="mt-4 text-[clamp(1.75rem,3.5vw,2.5rem)] font-semibold leading-tight tracking-[-0.02em]">
               Use the inference API
             </h2>
-            <p className="mt-4 text-[15px] leading-relaxed text-[#8a8a8a] md:text-base">
+            <p className="mt-4 text-[15px] leading-relaxed text-mute md:text-base">
               An OpenAI-compatible endpoint served by the network. Create a key,
               point any OpenAI client at it, or try it in the{" "}
-              <Link to="/playground" className="text-[#D4F3FF] underline-offset-4 hover:underline">
+              <Link to="/playground" className="text-accent underline-offset-4 hover:underline">
                 playground
               </Link>
               .
@@ -188,11 +188,11 @@ function NetworkBadge({
 }) {
   const connected = mounted && network != null;
   return (
-    <div className="text-sm text-[#8a8a8a] md:text-right">
+    <div className="text-sm text-mute md:text-right">
       <div className="flex items-center gap-2 md:justify-end">
         <span
           className={`h-2 w-2 rounded-full ${
-            connected ? "bg-[#5ce6a5]" : "bg-[#5c5c5c]"
+            connected ? "bg-[#5ce6a5]" : "bg-[var(--mute-soft)]"
           }`}
         />
         <span className={connected ? "text-[#5ce6a5]" : ""}>
@@ -200,7 +200,7 @@ function NetworkBadge({
         </span>
       </div>
       {connected && network && (
-        <p className="mt-1.5 text-[13px] text-[#6f6f6f]">
+        <p className="mt-1.5 text-[13px] text-mute">
           {network.workersOnline} workers online ({network.browserOnline} browser
           · {network.nativeOnline} native) · {network.jobsInQueue} in queue
         </p>
@@ -242,10 +242,10 @@ function StatusCard({
         <div className="flex items-center gap-2 text-sm">
           <span
             className={`h-2 w-2 rounded-full ${
-              mounted && online ? "bg-[#5ce6a5]" : "bg-[#5c5c5c]"
+              mounted && online ? "bg-[#5ce6a5]" : "bg-[var(--mute-soft)]"
             }`}
           />
-          <span className={mounted && online ? "text-[#5ce6a5]" : "text-[#8a8a8a]"}>
+          <span className={mounted && online ? "text-[#5ce6a5]" : "text-mute"}>
             {mounted && online ? "Online" : "Offline"}
           </span>
         </div>
@@ -255,15 +255,15 @@ function StatusCard({
         {cells.map((c) => (
           <div
             key={c.label}
-            className="rounded-2xl border border-white/[0.06] bg-black/40 p-4 text-center"
+            className="rounded-2xl border border-line bg-[var(--inset)] p-4 text-center"
           >
             <p className="text-2xl font-semibold tracking-[-0.02em]">{c.value}</p>
-            <p className="mt-1 text-[13px] text-[#6f6f6f]">{c.label}</p>
+            <p className="mt-1 text-[13px] text-mute">{c.label}</p>
           </div>
         ))}
       </div>
 
-      <p className="mt-6 text-sm text-[#8a8a8a]">
+      <p className="mt-6 text-sm text-mute">
         {mounted ? fmtUsdg(earnedToday) : "-"} earned today
       </p>
     </div>
@@ -282,13 +282,13 @@ function NetworkCard({
     <div className="glass-panel h-full rounded-[1.75rem] p-7 md:p-8">
       <h2 className="text-lg font-semibold tracking-[-0.02em]">Network</h2>
       <div className="mt-6 flex flex-col items-center justify-center py-6">
-        <div className="relative flex h-24 w-24 items-center justify-center rounded-full border border-white/[0.12] bg-white/[0.03]">
-          <div className="h-3 w-3 rounded-full bg-[#7ED6FF] shadow-[0_0_24px_rgba(126,214,255,0.8)]" />
+        <div className="relative flex h-24 w-24 items-center justify-center rounded-full border border-line bg-[var(--panel)]">
+          <div className="h-3 w-3 rounded-full bg-[var(--accent)] shadow-[0_0_24px_rgba(126,214,255,0.8)]" />
           <div className="absolute inset-0 animate-[spin-slow_18s_linear_infinite] rounded-full border-t border-[rgba(126,214,255,0.4)]" />
         </div>
-        <p className="mt-5 label-caps text-[#8a8a8a]">Orchestrator</p>
+        <p className="mt-5 label-caps text-mute">Orchestrator</p>
         {mounted && others > 0 && (
-          <p className="mt-1 text-[13px] text-[#6f6f6f]">+{others} more</p>
+          <p className="mt-1 text-[13px] text-mute">+{others} more</p>
         )}
       </div>
     </div>
@@ -354,13 +354,13 @@ function PayoutCard({
     <div className="glass-panel mt-5 rounded-[1.75rem] p-7 md:p-8">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <p className="section-index text-[#7ED6FF]/70">Payout</p>
+          <p className="section-index text-accent/70">Payout</p>
           <h3 className="mt-3 text-lg font-semibold tracking-[-0.02em]">
             {fmtUsdg(payout.availableUsd)}{" "}
-            <span className="text-sm font-normal text-[#8a8a8a]">available</span>
+            <span className="text-sm font-normal text-mute">available</span>
           </h3>
         </div>
-        <span className="text-[13px] text-[#6f6f6f]">
+        <span className="text-[13px] text-mute">
           Min payout {fmtUsdg(payout.thresholdUsd)}
         </span>
       </div>
@@ -368,19 +368,19 @@ function PayoutCard({
       <div className="mt-5">
         {payout.availableUsd < payout.thresholdUsd && (
           <div className="mb-5">
-            <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/[0.06]">
+            <div className="h-1.5 w-full overflow-hidden rounded-full bg-[var(--inset)]">
               <div
-                className="h-full rounded-full bg-[#7ED6FF] transition-[width] duration-500"
+                className="h-full rounded-full bg-[var(--accent)] transition-[width] duration-500"
                 style={{ width: `${pct}%` }}
               />
             </div>
-            <p className="mt-3 text-[14px] text-[#8a8a8a]">
+            <p className="mt-3 text-[14px] text-mute">
               Earn {fmtUsdg(remaining)} more to withdraw. Stay online — USDG
               accrues while your worker is connected.
             </p>
           </div>
         )}
-        <label className="text-[13px] text-[#6f6f6f]">
+        <label className="text-[13px] text-mute">
           Payout address (Robinhood Chain)
         </label>
         <div className="mt-2 flex flex-col gap-3 sm:flex-row">
@@ -389,7 +389,7 @@ function PayoutCard({
             onChange={(e) => setAddress(e.target.value)}
             placeholder="0x…"
             spellCheck={false}
-            className="w-full rounded-2xl border border-white/[0.08] bg-black/40 px-4 py-3 font-mono text-sm text-white outline-none placeholder:text-[#4a4a4a]"
+            className="w-full rounded-2xl border border-line bg-[var(--inset)] px-4 py-3 font-mono text-sm text-[var(--fg)] outline-none placeholder:text-[var(--mute-soft)]"
           />
           <button
             type="button"
@@ -416,7 +416,7 @@ function PayoutCard({
             ? "Requesting…"
             : `Withdraw ${fmtUsdg(payout.availableUsd)}`}
         </button>
-        <p className="mt-2 text-center text-xs text-[#6f6f6f]">
+        <p className="mt-2 text-center text-xs text-mute">
           Queued withdrawals settle in USDG after the paymaster vault is funded.
         </p>
       </div>
@@ -425,7 +425,7 @@ function PayoutCard({
       {err && <p className="mt-3 text-xs text-[#ff9b9b]">{err}</p>}
 
       {payout.history.length > 0 && (
-        <div className="mt-6 border-t border-white/[0.06] pt-5">
+        <div className="mt-6 border-t border-line pt-5">
           <p className="section-index">Recent payouts</p>
           <ul className="mt-3 space-y-2">
             {payout.history.map((p) => (
@@ -433,14 +433,14 @@ function PayoutCard({
                 key={p.id}
                 className="flex items-center justify-between text-sm"
               >
-                <span className="text-[#c9c9c9]">{fmtUsdg(p.amountUsd)}</span>
+                <span className="text-[var(--fg)]/70">{fmtUsdg(p.amountUsd)}</span>
                 <span
                   className={`text-xs capitalize ${
                     p.status === "paid"
                       ? "text-[#5ce6a5]"
                       : p.status === "pending"
-                        ? "text-[#D4F3FF]"
-                        : "text-[#8a8a8a]"
+                        ? "text-accent"
+                        : "text-mute"
                   }`}
                 >
                   {p.status}
@@ -486,7 +486,7 @@ function TestJobPanel({
 
   return (
     <div className="glass-panel mt-5 rounded-[1.75rem] p-7 md:p-8">
-      <p className="section-index text-[#7ED6FF]/70">Prove the round-trip</p>
+      <p className="section-index text-accent/70">Prove the round-trip</p>
       <h3 className="mt-3 text-lg font-semibold tracking-[-0.02em]">
         Run a test job on your worker
       </h3>
@@ -494,7 +494,7 @@ function TestJobPanel({
         <input
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
-          className="w-full rounded-2xl border border-white/[0.08] bg-black/40 px-4 py-3 text-sm text-white outline-none placeholder:text-[#4a4a4a]"
+          className="w-full rounded-2xl border border-line bg-[var(--inset)] px-4 py-3 text-sm text-[var(--fg)] outline-none placeholder:text-[var(--mute-soft)]"
           placeholder="Ask your worker something…"
         />
         <button
@@ -507,7 +507,7 @@ function TestJobPanel({
         </button>
       </div>
       {(output || err) && (
-        <pre className="mt-4 max-h-52 overflow-auto whitespace-pre-wrap rounded-2xl border border-white/[0.06] bg-black/50 p-4 text-sm leading-relaxed text-[#c9c9c9]">
+        <pre className="mt-4 max-h-52 overflow-auto whitespace-pre-wrap rounded-2xl border border-line bg-[var(--inset)] p-4 text-sm leading-relaxed text-[var(--fg)]/70">
           {err ? <span className="text-[#ff9b9b]">{err}</span> : output}
         </pre>
       )}
@@ -568,8 +568,8 @@ function ApiKeysCard({
         <h3 className="text-xl font-semibold tracking-[-0.02em]">API keys</h3>
         <span className="glass-tag glass-tag-neutral">OpenAI-compatible</span>
       </div>
-      <p className="mt-4 text-[15px] leading-relaxed text-[#8a8a8a]">
-        Authenticate requests to <code className="text-[#D4F3FF]">/v1/chat/completions</code>.
+      <p className="mt-4 text-[15px] leading-relaxed text-mute">
+        Authenticate requests to <code className="text-accent">/v1/chat/completions</code>.
         The full secret is shown once - store it safely.
       </p>
 
@@ -581,7 +581,7 @@ function ApiKeysCard({
           onChange={(e) => setLabel(e.target.value)}
           placeholder="Key label (optional) e.g. my-app"
           spellCheck={false}
-          className="w-full rounded-2xl border border-white/[0.08] bg-black/40 px-4 py-3 text-sm text-white outline-none placeholder:text-[#4a4a4a]"
+          className="w-full rounded-2xl border border-line bg-[var(--inset)] px-4 py-3 text-sm text-[var(--fg)] outline-none placeholder:text-[var(--mute-soft)]"
         />
         <button
           type="button"
@@ -594,18 +594,18 @@ function ApiKeysCard({
       </div>
 
       {fresh && (
-        <div className="mt-4 rounded-2xl border border-[rgba(126,214,255,0.25)] bg-black/50 p-4">
-          <p className="text-xs text-[#6f6f6f]">
+        <div className="mt-4 rounded-2xl border border-[rgba(126,214,255,0.25)] bg-[var(--inset)] p-4">
+          <p className="text-xs text-mute">
             Your new key (copy it now - you won&apos;t see it again):
           </p>
           <div className="mt-2 flex items-center gap-2">
-            <code className="flex-1 overflow-x-auto text-xs text-[#D4F3FF]">
+            <code className="flex-1 overflow-x-auto text-xs text-accent">
               {fresh.key}
             </code>
             <button
               type="button"
               onClick={copy}
-              className="shrink-0 rounded-full border border-white/[0.12] px-3 py-1 text-xs text-[#D4F3FF] hover:border-white/30"
+              className="shrink-0 rounded-full border border-line px-3 py-1 text-xs text-accent hover:border-[var(--fg)]/30"
             >
               {copied ? "Copied" : "Copy"}
             </button>
@@ -620,11 +620,11 @@ function ApiKeysCard({
           {live.map((k) => (
             <li
               key={k.id}
-              className="flex items-center justify-between gap-3 rounded-2xl border border-white/[0.06] bg-black/40 px-4 py-3"
+              className="flex items-center justify-between gap-3 rounded-2xl border border-line bg-[var(--inset)] px-4 py-3"
             >
               <div className="min-w-0">
-                <p className="truncate font-mono text-sm text-[#c9c9c9]">{k.key}</p>
-                <p className="text-xs text-[#6f6f6f]">
+                <p className="truncate font-mono text-sm text-[var(--fg)]/70">{k.key}</p>
+                <p className="text-xs text-mute">
                   {k.label ? `${k.label} · ` : ""}
                   {k.lastUsedAt ? "used" : "never used"}
                 </p>
@@ -632,7 +632,7 @@ function ApiKeysCard({
               <button
                 type="button"
                 onClick={() => void revoke(k.id)}
-                className="shrink-0 rounded-full border border-white/[0.1] px-3 py-1 text-xs text-[#8a8a8a] hover:border-[#ff9b9b]/40 hover:text-[#ff9b9b]"
+                className="shrink-0 rounded-full border border-line px-3 py-1 text-xs text-mute hover:border-[#ff9b9b]/40 hover:text-[#ff9b9b]"
               >
                 Revoke
               </button>
@@ -647,7 +647,7 @@ function ApiKeysCard({
 function BillingStrip({ billing }: { billing: UserStats["billing"] }) {
   if (!billing.enabled) {
     return (
-      <div className="mt-5 flex items-center gap-2 rounded-2xl border border-white/[0.06] bg-black/40 px-4 py-3 text-[13px] text-[#8a8a8a]">
+      <div className="mt-5 flex items-center gap-2 rounded-2xl border border-line bg-[var(--inset)] px-4 py-3 text-[13px] text-mute">
         <span className="h-2 w-2 rounded-full bg-[#5ce6a5]" />
         Free in this environment - no billing enforced.
       </div>
@@ -666,32 +666,32 @@ function BillingStrip({ billing }: { billing: UserStats["billing"] }) {
     ["Large (~70B)", billing.tiers.large],
   ];
   return (
-    <div className="mt-5 rounded-2xl border border-white/[0.06] bg-black/40 p-4">
+    <div className="mt-5 rounded-2xl border border-line bg-[var(--inset)] p-4">
       <div className="flex items-center justify-between text-sm">
-        <span className="text-[#c9c9c9]">
+        <span className="text-[var(--fg)]/70">
           {billing.freeRemaining} / {billing.freeTier} free requests left
         </span>
-        <span className="text-[#8a8a8a]">
+        <span className="text-mute">
           Credits{" "}
-          <span className="text-[#D4F3FF]">${billing.creditsUsd.toFixed(2)}</span>
+          <span className="text-accent">${billing.creditsUsd.toFixed(2)}</span>
         </span>
       </div>
-      <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-white/[0.06]">
+      <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-[var(--inset)]">
         <div
-          className="h-full rounded-full bg-[#7ED6FF] transition-[width] duration-500"
+          className="h-full rounded-full bg-[var(--accent)] transition-[width] duration-500"
           style={{ width: `${pct}%` }}
         />
       </div>
 
-      <div className="mt-4 border-t border-white/[0.06] pt-3">
-        <p className="text-[13px] text-[#6f6f6f]">
+      <div className="mt-4 border-t border-line pt-3">
+        <p className="text-[13px] text-mute">
           Pay per token in USDG or $NURO (per 1M tokens, in / out):
         </p>
         <ul className="mt-2 space-y-1 text-[13px]">
           {tiers.map(([name, p]) => (
             <li key={name} className="flex items-center justify-between">
-              <span className="text-[#8a8a8a]">{name}</span>
-              <span className="font-mono text-[#c9c9c9]">
+              <span className="text-mute">{name}</span>
+              <span className="font-mono text-[var(--fg)]/70">
                 {per1m(p.inputPer1k)} / {per1m(p.outputPer1k)}
               </span>
             </li>
@@ -700,7 +700,7 @@ function BillingStrip({ billing }: { billing: UserStats["billing"] }) {
       </div>
 
       {outOfFree && billing.creditsUsd <= 0 && (
-        <p className="mt-3 text-[13px] text-[#8a8a8a]">
+        <p className="mt-3 text-[13px] text-mute">
           Free tier used - credit top-ups go live with the $NURO token deployment.
         </p>
       )}
@@ -731,19 +731,19 @@ function ApiUsageCard() {
         <button
           type="button"
           onClick={copy}
-          className="shrink-0 rounded-full border border-white/[0.12] px-3 py-1 text-xs text-[#D4F3FF] hover:border-white/30"
+          className="shrink-0 rounded-full border border-line px-3 py-1 text-xs text-accent hover:border-[var(--fg)]/30"
         >
           {copied ? "Copied" : "Copy"}
         </button>
       </div>
-      <p className="mt-4 text-[15px] leading-relaxed text-[#8a8a8a]">
+      <p className="mt-4 text-[15px] leading-relaxed text-mute">
         Any OpenAI SDK works - just set the base URL and your key.
       </p>
-      <pre className="mt-6 flex-1 overflow-x-auto rounded-2xl border border-white/[0.06] bg-black/50 p-4 text-xs leading-relaxed text-[#a3a3a3]">
+      <pre className="mt-6 flex-1 overflow-x-auto rounded-2xl border border-line bg-[var(--inset)] p-4 text-xs leading-relaxed text-mute">
         <code>{snippet}</code>
       </pre>
-      <p className="mt-4 text-xs text-[#6f6f6f]">
-        Base URL <code className="text-[#c9c9c9]">{PUBLIC_API_URL}/v1</code> ·
+      <p className="mt-4 text-xs text-mute">
+        Base URL <code className="text-[var(--fg)]/70">{PUBLIC_API_URL}/v1</code> ·
         model optional (routed to an available worker).
       </p>
     </article>
@@ -802,18 +802,18 @@ function NativeWorkerCard({
         </h3>
         <span className="glass-tag">Recommended</span>
       </div>
-      <p className="mt-4 text-2xl font-semibold text-[#D4F3FF]">
-        Highest rate <span className="text-sm text-[#8a8a8a]">per token</span>
+      <p className="mt-4 text-2xl font-semibold text-accent">
+        Highest rate <span className="text-sm text-mute">per token</span>
       </p>
-      <p className="mt-1 text-[13px] text-[#6f6f6f]">
+      <p className="mt-1 text-[13px] text-mute">
         Serves the largest models — paid in USDG
       </p>
-      <p className="mt-5 text-[15px] leading-relaxed text-[#8a8a8a]">
+      <p className="mt-5 text-[15px] leading-relaxed text-mute">
         Runs the biggest models on your own GPU in the background via Ollama - no
         tab to keep open. The highest-paying jobs on the network.
       </p>
 
-      <ol className="mt-6 space-y-2 text-[14px] text-[#a3a3a3]">
+      <ol className="mt-6 space-y-2 text-[14px] text-mute">
         <li>1. Click below to get your command</li>
         <li>2. Paste it into your terminal</li>
         <li>3. You&apos;re earning - it connects automatically</li>
@@ -821,19 +821,19 @@ function NativeWorkerCard({
 
       {command ? (
         <div className="mt-6">
-          <div className="flex items-center gap-2 rounded-2xl border border-white/[0.08] bg-black/50 p-4">
-            <code className="flex-1 overflow-x-auto text-xs text-[#D4F3FF]">
+          <div className="flex items-center gap-2 rounded-2xl border border-line bg-[var(--inset)] p-4">
+            <code className="flex-1 overflow-x-auto text-xs text-accent">
               {command}
             </code>
             <button
               type="button"
               onClick={copy}
-              className="shrink-0 rounded-full border border-white/[0.12] px-3 py-1 text-xs text-[#D4F3FF] hover:border-white/30"
+              className="shrink-0 rounded-full border border-line px-3 py-1 text-xs text-accent hover:border-[var(--fg)]/30"
             >
               {copied ? "Copied" : "Copy"}
             </button>
           </div>
-          <p className="mt-2 text-xs text-[#6f6f6f]">
+          <p className="mt-2 text-xs text-mute">
             Token is shown once - keep it safe. Needs Node.js 18+ and a compatible
             GPU (NVIDIA, AMD, Apple Silicon).
           </p>
@@ -856,7 +856,7 @@ function NativeWorkerCard({
       {err && <p className="mt-3 text-xs text-[#ff9b9b]">{err}</p>}
 
       <div className="mt-auto pt-6">
-        <p className="text-xs text-[#6f6f6f]">Need Node.js 18+ first? Install it:</p>
+        <p className="text-xs text-mute">Need Node.js 18+ first? Install it:</p>
         <div className="mt-2 flex gap-1.5">
           {(Object.keys(NODE_INSTALL) as Array<keyof typeof NODE_INSTALL>).map(
             (k) => (
@@ -867,7 +867,7 @@ function NativeWorkerCard({
                 className={`rounded-full px-3 py-1 text-xs transition-colors ${
                   os === k
                     ? "bg-white text-black"
-                    : "border border-white/[0.1] text-[#8a8a8a] hover:text-white"
+                    : "border border-line text-mute hover:text-[var(--fg)]"
                 }`}
               >
                 {k}
@@ -875,7 +875,7 @@ function NativeWorkerCard({
             ),
           )}
         </div>
-        <pre className="mt-2 overflow-x-auto rounded-xl border border-white/[0.06] bg-black/40 p-3 text-xs text-[#a3a3a3]">
+        <pre className="mt-2 overflow-x-auto rounded-xl border border-line bg-[var(--inset)] p-3 text-xs text-mute">
           <code>{NODE_INSTALL[os]}</code>
         </pre>
       </div>
@@ -915,27 +915,27 @@ function BrowserWorkerCard({
           {online ? (networked ? "Online" : "Local") : "WebGPU"}
         </span>
       </div>
-      <p className="mt-4 text-2xl font-semibold text-[#D4F3FF]">
-        Entry rate <span className="text-sm text-[#8a8a8a]">per token</span>
+      <p className="mt-4 text-2xl font-semibold text-accent">
+        Entry rate <span className="text-sm text-mute">per token</span>
       </p>
-      <p className="mt-1 text-[13px] text-[#6f6f6f]">Zero install - smaller models</p>
-      <p className="mt-5 text-[15px] leading-relaxed text-[#8a8a8a]">
+      <p className="mt-1 text-[13px] text-mute">Zero install - smaller models</p>
+      <p className="mt-5 text-[15px] leading-relaxed text-mute">
         Runs a lightweight Qwen model right in this tab using WebGPU. Easiest to
         start - no install - but earns far less than native, and only while the
         tab stays open.
       </p>
 
       {(loading || online || message) && (
-        <div className="mt-6 rounded-2xl border border-white/[0.06] bg-black/40 p-4">
+        <div className="mt-6 rounded-2xl border border-line bg-[var(--inset)] p-4">
           {loading && (
-            <div className="h-1.5 w-full overflow-hidden rounded-full bg-white/[0.06]">
+            <div className="h-1.5 w-full overflow-hidden rounded-full bg-[var(--inset)]">
               <div
-                className="h-full rounded-full bg-[#7ED6FF] transition-[width] duration-300"
+                className="h-full rounded-full bg-[var(--accent)] transition-[width] duration-300"
                 style={{ width: `${Math.round(progress * 100)}%` }}
               />
             </div>
           )}
-          <p className="mt-2 text-xs text-[#8a8a8a]">{message}</p>
+          <p className="mt-2 text-xs text-mute">{message}</p>
         </div>
       )}
 

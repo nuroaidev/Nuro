@@ -193,7 +193,7 @@ export default function AssistantApp() {
   const locked = !authenticated;
 
   return (
-    <div className="flex min-h-screen flex-col overflow-x-hidden bg-[var(--bg)] text-[var(--fg)]">
+    <div className="page-root flex flex-col">
       <SiteHeader />
       <main className="page-shell relative flex flex-1 flex-col pt-6 pb-6">
         {/* status bar */}
@@ -207,7 +207,7 @@ export default function AssistantApp() {
             <button
               type="button"
               onClick={reset}
-              className="text-xs text-[#6f6f6f] transition hover:text-[#c9c9c9]"
+              className="text-xs text-mute transition hover:text-[var(--fg)]"
             >
               New chat
             </button>
@@ -222,7 +222,7 @@ export default function AssistantApp() {
               <br />
               <span className="text-gradient">with Nuro</span>
             </h1>
-            <p className="mt-4 max-w-sm text-center text-[15px] leading-relaxed text-[#8a8a8a]">
+            <p className="mt-4 max-w-sm text-center text-[15px] leading-relaxed text-mute">
               Log in to start chatting. Every account gets{" "}
               {EMPTY_ENTITLEMENTS.freeLimit} free messages, then credits keep the
               network running.
@@ -240,7 +240,7 @@ export default function AssistantApp() {
           <div className="flex flex-1 flex-col items-center justify-center pb-6">
             <AssistantMascot />
             <h1 className="mt-7 text-center text-[clamp(1.8rem,4vw,2.6rem)] font-semibold leading-[1.05] tracking-[-0.03em]">
-              <span className="text-white">What can I</span>
+              <span className="text-[var(--fg)]">What can I</span>
               <br />
               <span className="text-gradient">help you build?</span>
             </h1>
@@ -260,7 +260,7 @@ export default function AssistantApp() {
               />
             </div>
             {err && <p className="mt-3 text-xs text-[#ff9b9b]">{err}</p>}
-            <p className="mt-6 text-center text-[12px] text-[#5c5c5c]">
+            <p className="mt-6 text-center text-[12px] text-[var(--mute-soft)]">
               Nuro can make mistakes. Double-check important information.
             </p>
           </div>
@@ -268,7 +268,7 @@ export default function AssistantApp() {
           <>
             <div
               ref={scrollRef}
-              className="flex-1 space-y-5 overflow-y-auto rounded-[1.5rem] border border-white/[0.06] bg-black/30 p-5 md:p-7"
+              className="flex-1 space-y-5 overflow-y-auto rounded-[1.5rem] border border-line bg-[var(--inset)] p-5 md:p-7"
               style={{ minHeight: "46vh" }}
             >
               {msgs.map((m) => (
@@ -325,7 +325,7 @@ function EntitlementPill({
         className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[12px] ${
           low
             ? "border-[#c9a24a]/40 bg-[#c9a24a]/[0.08] text-[#e6c56a]"
-            : "border-white/[0.1] bg-white/[0.03] text-[#c9c9c9]"
+            : "border-line bg-[var(--panel)] text-[var(--fg)]/70"
         }`}
       >
         <span className="h-1.5 w-1.5 rounded-full bg-[#7ED6FF]" />
@@ -334,7 +334,7 @@ function EntitlementPill({
       <button
         type="button"
         onClick={onBuy}
-        className="rounded-full border border-white/[0.12] px-3 py-1.5 text-[12px] text-white transition hover:border-white/30"
+        className="rounded-full border border-line px-3 py-1.5 text-[12px] text-[var(--fg)] transition hover:border-[var(--fg)]/30"
       >
         Get credits
       </button>
@@ -365,7 +365,7 @@ function Composer({
 }) {
   const fileRef = useRef<HTMLInputElement | null>(null);
   return (
-    <div className="glass-panel rounded-[1.4rem] border border-white/[0.1] bg-black/50 p-3">
+    <div className="glass-panel rounded-[1.4rem] border border-line bg-[var(--inset)] p-3">
       {attach.length > 0 && (
         <div className="mb-2 flex flex-wrap gap-2">
           {attach.map((a, i) => (
@@ -373,12 +373,12 @@ function Composer({
               <img
                 src={a.url}
                 alt={a.name}
-                className="h-16 w-16 rounded-lg border border-white/[0.1] object-cover"
+                className="h-16 w-16 rounded-lg border border-line object-cover"
               />
               <button
                 type="button"
                 onClick={() => removeAttach(i)}
-                className="absolute -right-1.5 -top-1.5 grid h-5 w-5 place-items-center rounded-full bg-black text-white shadow"
+                className="absolute -right-1.5 -top-1.5 grid h-5 w-5 place-items-center rounded-full bg-[var(--bg)] text-[var(--fg)] shadow"
                 aria-label="Remove image"
               >
                 <svg viewBox="0 0 24 24" className="h-3 w-3" fill="none">
@@ -409,7 +409,7 @@ function Composer({
         <button
           type="button"
           onClick={() => fileRef.current?.click()}
-          className="grid h-10 w-10 shrink-0 place-items-center rounded-xl text-[#8a8a8a] transition hover:bg-white/[0.05] hover:text-white"
+          className="grid h-10 w-10 shrink-0 place-items-center rounded-xl text-mute transition hover:bg-[var(--inset)] hover:text-[var(--fg)]"
           aria-label="Attach image"
           title="Attach image"
         >
@@ -434,23 +434,23 @@ function Composer({
           }}
           rows={1}
           placeholder="Ask anything, or attach an image…"
-          className="max-h-40 min-h-[40px] w-full resize-none bg-transparent px-1 py-2 text-[15px] text-white outline-none placeholder:text-[#5c5c5c]"
+          className="max-h-40 min-h-[40px] w-full resize-none bg-transparent px-1 py-2 text-[15px] text-[var(--fg)] outline-none placeholder:text-[var(--mute-soft)]"
         />
         {streaming ? (
           <button
             type="button"
             onClick={onStop}
-            className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white/[0.1] text-white transition hover:bg-white/[0.16]"
+            className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[var(--inset)] text-[var(--fg)] transition hover:bg-[var(--fg)]/15"
             aria-label="Stop"
           >
-            <span className="h-3 w-3 rounded-[3px] bg-white" />
+            <span className="h-3 w-3 rounded-[3px] bg-[var(--fg)]" />
           </button>
         ) : (
           <button
             type="button"
             onClick={onSend}
             disabled={!input.trim() && attach.length === 0}
-            className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white text-black transition hover:bg-[#e8e8e8] disabled:opacity-30"
+            className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-[var(--fg)] text-[var(--bg)] transition hover:opacity-80 disabled:opacity-30"
             aria-label="Send"
           >
             <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none">
@@ -476,8 +476,8 @@ function Bubble({ msg }: { msg: Msg }) {
       <div
         className={`max-w-[85%] rounded-2xl px-4 py-3 text-[15px] leading-relaxed ${
           isUser
-            ? "bg-white/[0.08] text-white"
-            : "border border-white/[0.06] bg-black/40 text-[#d4d4d4]"
+            ? "bg-[var(--inset)] text-[var(--fg)]"
+            : "border border-line bg-[var(--inset)] text-[var(--fg)]/75"
         }`}
       >
         {msg.images && msg.images.length > 0 && (
@@ -487,7 +487,7 @@ function Bubble({ msg }: { msg: Msg }) {
                 key={i}
                 src={url}
                 alt=""
-                className="max-h-48 rounded-lg border border-white/[0.1] object-cover"
+                className="max-h-48 rounded-lg border border-line object-cover"
               />
             ))}
           </div>
@@ -495,7 +495,7 @@ function Bubble({ msg }: { msg: Msg }) {
         {msg.text ? (
           <span className="whitespace-pre-wrap">{msg.text}</span>
         ) : (
-          <span className="inline-flex gap-1 text-[#7ED6FF]">
+          <span className="inline-flex gap-1 text-accent">
             <span className="animate-pulse">●</span>
           </span>
         )}

@@ -33,10 +33,10 @@ export default function ProfileRoute() {
 
 function ProfileBooting() {
   return (
-    <div className="flex min-h-screen flex-col overflow-x-hidden bg-black">
+    <div className="page-root flex flex-col">
       <SiteHeader />
       <main className="page-shell relative flex flex-1 items-center justify-center pb-10">
-        <p className="text-sm text-[#8a8a8a]">Loading your account…</p>
+        <p className="text-sm text-mute">Loading your account…</p>
       </main>
     </div>
   );

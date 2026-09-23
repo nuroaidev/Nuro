@@ -131,8 +131,8 @@ export function Paywall({
             : `Pay ${priceLabel(token, pack)}`;
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-end justify-center bg-black/70 p-4 backdrop-blur-sm sm:items-center">
-      <div className="glass-panel w-full max-w-md rounded-[1.75rem] border border-white/[0.1] bg-black/90 p-6 md:p-7">
+    <div className="fixed inset-0 z-[100] flex items-end justify-center bg-[var(--fg)]/45 p-4 backdrop-blur-sm sm:items-center">
+      <div className="glass-panel w-full max-w-md rounded-[1.75rem] border border-line bg-[var(--bg)] p-6 md:p-7">
         <div className="flex items-start justify-between">
           <div>
             <p className="label-caps">Out of free messages</p>
@@ -143,7 +143,7 @@ export function Paywall({
           <button
             type="button"
             onClick={onClose}
-            className="rounded-full p-1 text-[#8a8a8a] transition hover:text-white"
+            className="rounded-full p-1 text-mute transition hover:text-[var(--fg)]"
             aria-label="Close"
           >
             <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none">
@@ -157,7 +157,7 @@ export function Paywall({
           </button>
         </div>
 
-        <p className="mt-2 text-[13px] leading-relaxed text-[#8a8a8a]">
+        <p className="mt-2 text-[13px] leading-relaxed text-mute">
           You've used {entitlements.freeUsed}/{entitlements.freeLimit} free
           messages. Credits power the in-app assistant — pay with USDG or $NURO
           on Robinhood Chain.
@@ -174,20 +174,20 @@ export function Paywall({
                 onClick={() => setPack(p)}
                 className={`relative rounded-2xl border px-3 py-4 text-center transition ${
                   active
-                    ? "border-[#7ED6FF]/60 bg-[#7ED6FF]/[0.08]"
-                    : "border-white/[0.08] bg-black/40 hover:border-white/20"
+                    ? "border-[var(--accent)]/60 bg-[var(--accent)]/[0.08]"
+                    : "border-line bg-[var(--inset)] hover:border-[var(--fg)]/20"
                 }`}
               >
                 {p.highlight && (
-                  <span className="absolute -top-2 left-1/2 -translate-x-1/2 rounded-full bg-[#7ED6FF] px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-black">
+                  <span className="absolute -top-2 left-1/2 -translate-x-1/2 rounded-full bg-[var(--accent)] px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wide text-[var(--bg)]">
                     Popular
                   </span>
                 )}
-                <div className="text-lg font-semibold text-white">
+                <div className="text-lg font-semibold text-[var(--fg)]">
                   {p.credits}
                 </div>
-                <div className="text-[11px] text-[#8a8a8a]">messages</div>
-                <div className="mt-2 text-sm font-medium text-[#D4F3FF]">
+                <div className="text-[11px] text-mute">messages</div>
+                <div className="mt-2 text-sm font-medium text-accent">
                   {priceLabel(token, p)}
                 </div>
               </button>
@@ -196,7 +196,7 @@ export function Paywall({
         </div>
 
         {/* Token toggle */}
-        <div className="mt-4 inline-flex rounded-full border border-white/[0.08] bg-black/40 p-1">
+        <div className="mt-4 inline-flex rounded-full border border-line bg-[var(--inset)] p-1">
           {(Object.keys(PAYMENT_TOKENS) as PayTokenId[]).map((id) => (
             <button
               key={id}
@@ -204,8 +204,8 @@ export function Paywall({
               onClick={() => setToken(id)}
               className={`rounded-full px-4 py-1.5 text-xs font-medium transition ${
                 token === id
-                  ? "bg-[#7ED6FF]/[0.14] text-[#D4F3FF]"
-                  : "text-[#8a8a8a] hover:text-white"
+                  ? "bg-[var(--accent)]/15 text-accent"
+                  : "text-mute hover:text-[var(--fg)]"
               }`}
             >
               {PAYMENT_TOKENS[id].symbol}
@@ -238,7 +238,7 @@ export function Paywall({
           <p className="mt-3 text-center text-[13px] text-[#ff9b9b]">{error}</p>
         )}
 
-        <p className="mt-4 text-center text-[11px] text-[#5c5c5c]">
+        <p className="mt-4 text-center text-[11px] text-[var(--mute-soft)]">
           Payment settles on Robinhood Chain to the Nuro treasury. Credits are
           granted after the payment is verified on-chain.
         </p>

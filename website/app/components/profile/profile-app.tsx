@@ -46,7 +46,7 @@ export default function ProfileApp() {
           <h1 className="mt-4 text-2xl font-semibold tracking-[-0.02em]">
             Sign in to view your profile
           </h1>
-          <p className="mt-3 text-[15px] leading-relaxed text-[#8a8a8a]">
+          <p className="mt-3 text-[15px] leading-relaxed text-mute">
             Log in to see your wallet, your {NURO_SYMBOL} balance, and send or
             receive on Robinhood Chain.
           </p>
@@ -76,7 +76,7 @@ export default function ProfileApp() {
 
 function ProfileShell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="min-h-screen overflow-x-hidden bg-black">
+    <div className="page-root">
       <SiteHeader />
       <main className="page-shell relative pt-16 pb-24 md:pt-20">{children}</main>
       <SiteFooter />
@@ -110,12 +110,12 @@ function ProfileHeader({
   return (
     <div className="glass-panel flex flex-col gap-5 rounded-[1.75rem] p-6 md:flex-row md:items-center md:justify-between md:p-8">
       <div className="flex items-center gap-4">
-        <div className="grid h-16 w-16 shrink-0 place-items-center overflow-hidden rounded-full border border-white/[0.14] bg-white/[0.04]">
+        <div className="grid h-16 w-16 shrink-0 place-items-center overflow-hidden rounded-full border border-line bg-[var(--panel)]">
           {avatarUrl ? (
             // eslint-disable-next-line jsx-a11y/alt-text
             <img src={avatarUrl} className="h-full w-full object-cover" alt="" />
           ) : (
-            <span className="font-display text-2xl text-[#D4F3FF]">{initial}</span>
+            <span className="font-display text-2xl text-accent">{initial}</span>
           )}
         </div>
         <div>
@@ -127,9 +127,9 @@ function ProfileHeader({
             {linked.map((l) => (
               <span
                 key={l.label}
-                className="rounded-full border border-white/[0.08] bg-black/40 px-3 py-1 text-[11px] text-[#8a8a8a]"
+                className="rounded-full border border-line bg-[var(--inset)] px-3 py-1 text-[11px] text-mute"
               >
-                <span className="text-[#5c5c5c]">{l.label}</span> · {l.value}
+                <span className="text-[var(--mute-soft)]">{l.label}</span> · {l.value}
               </span>
             ))}
           </div>
@@ -167,17 +167,17 @@ function WalletCard({
   return (
     <article className="card glass-panel rounded-[1.5rem] p-6 md:p-7">
       <div className="flex items-center justify-between">
-        <h2 className="text-base font-semibold tracking-[-0.02em] text-[#D4F3FF]">
+        <h2 className="text-base font-semibold tracking-[-0.02em] text-accent">
           Wallet
         </h2>
-        <span className="rounded-full border border-white/[0.08] bg-black/40 px-3 py-1 text-[11px] text-[#8a8a8a]">
+        <span className="rounded-full border border-line bg-[var(--inset)] px-3 py-1 text-[11px] text-mute">
           {isEmbedded ? "Embedded" : "Connected"} · Robinhood Chain
         </span>
       </div>
 
       {address ? (
         <>
-          <p className="mt-4 break-all font-mono text-sm text-white/90">
+          <p className="mt-4 break-all font-mono text-sm text-[var(--fg)]/90">
             {address}
           </p>
           <div className="mt-4 flex gap-2.5">
@@ -199,7 +199,7 @@ function WalletCard({
           </div>
         </>
       ) : (
-        <p className="mt-4 text-sm text-[#8a8a8a]">
+        <p className="mt-4 text-sm text-mute">
           No wallet yet. It's created automatically on your next login.
         </p>
       )}
@@ -246,20 +246,20 @@ function BalanceCard({ address }: { address: string }) {
   return (
     <article className="card glass-panel flex flex-col rounded-[1.5rem] p-6 md:p-7">
       <div className="flex items-center justify-between">
-        <h2 className="text-base font-semibold tracking-[-0.02em] text-[#D4F3FF]">
+        <h2 className="text-base font-semibold tracking-[-0.02em] text-accent">
           Balance
         </h2>
         <button
           type="button"
           onClick={() => void refresh()}
-          className="text-[11px] text-[#8a8a8a] transition-colors hover:text-white"
+          className="text-[11px] text-mute transition-colors hover:text-[var(--fg)]"
         >
           Refresh
         </button>
       </div>
       <div className="mt-auto pt-6">
         <div className="flex items-baseline gap-2">
-          <span className="text-4xl font-semibold tracking-[-0.03em] text-white">
+          <span className="text-4xl font-semibold tracking-[-0.03em] text-[var(--fg)]">
             {loading && balance === null
               ? "—"
               : balance === null
@@ -273,7 +273,7 @@ function BalanceCard({ address }: { address: string }) {
         {error ? (
           <p className="mt-2 text-[12px] text-[#ff9b9b]">{error}</p>
         ) : (
-          <p className="mt-2 text-[12px] text-[#5c5c5c]">
+          <p className="mt-2 text-[12px] text-[var(--mute-soft)]">
             Live from Robinhood Chain
           </p>
         )}
@@ -295,7 +295,7 @@ function SendReceive({
 
   return (
     <div className="glass-panel mt-4 rounded-[1.75rem] p-6 md:p-8">
-      <div className="inline-flex rounded-full border border-white/[0.08] bg-black/40 p-1">
+      <div className="inline-flex rounded-full border border-line bg-[var(--inset)] p-1">
         {(["receive", "send"] as const).map((t) => (
           <button
             key={t}
@@ -303,8 +303,8 @@ function SendReceive({
             onClick={() => setTab(t)}
             className={`rounded-full px-5 py-2 text-sm font-medium capitalize transition ${
               tab === t
-                ? "bg-[#7ED6FF]/[0.14] text-[#D4F3FF]"
-                : "text-[#8a8a8a] hover:text-white"
+                ? "bg-[#7ED6FF]/[0.14] text-accent"
+                : "text-mute hover:text-[var(--fg)]"
             }`}
           >
             {t}
@@ -335,13 +335,13 @@ function ReceivePanel({ address }: { address: string }) {
 
   return (
     <div className="max-w-xl">
-      <p className="text-sm leading-relaxed text-[#8a8a8a]">
+      <p className="text-sm leading-relaxed text-mute">
         Share this address to receive ${NURO_SYMBOL} or any asset on{" "}
-        <span className="text-white">Robinhood Chain</span>. Sending assets from
+        <span className="text-[var(--fg)]">Robinhood Chain</span>. Sending assets from
         another network will lose them.
       </p>
-      <div className="mt-4 rounded-2xl border border-white/[0.08] bg-black/40 p-4">
-        <p className="break-all font-mono text-sm text-white/90">
+      <div className="mt-4 rounded-2xl border border-line bg-[var(--inset)] p-4">
+        <p className="break-all font-mono text-sm text-[var(--fg)]/90">
           {address || "—"}
         </p>
       </div>
@@ -425,7 +425,7 @@ function SendPanel({ fromAddress }: { fromAddress: string }) {
 
   return (
     <div className="max-w-xl">
-      <label className="block text-[13px] font-medium text-[#c9c9c9]">
+      <label className="block text-[13px] font-medium text-[var(--fg)]/70">
         Recipient address
       </label>
       <input
@@ -433,17 +433,17 @@ function SendPanel({ fromAddress }: { fromAddress: string }) {
         onChange={(e) => setTo(e.target.value)}
         placeholder="0x…"
         spellCheck={false}
-        className="mt-2 w-full rounded-2xl border border-white/[0.1] bg-black/40 px-4 py-3 font-mono text-sm text-white outline-none transition focus:border-[#7ED6FF]/50"
+        className="mt-2 w-full rounded-2xl border border-line bg-[var(--inset)] px-4 py-3 font-mono text-sm text-[var(--fg)] outline-none transition focus:border-[#7ED6FF]/50"
       />
 
       <div className="mt-4 flex items-center justify-between">
-        <label className="text-[13px] font-medium text-[#c9c9c9]">
+        <label className="text-[13px] font-medium text-[var(--fg)]/70">
           Amount (${NURO_SYMBOL})
         </label>
         <button
           type="button"
           onClick={setMax}
-          className="text-[11px] text-[#8a8a8a] transition-colors hover:text-white"
+          className="text-[11px] text-mute transition-colors hover:text-[var(--fg)]"
         >
           Balance: {balanceLabel} · Max
         </button>
@@ -453,7 +453,7 @@ function SendPanel({ fromAddress }: { fromAddress: string }) {
         onChange={(e) => setAmount(e.target.value)}
         placeholder="0.0"
         inputMode="decimal"
-        className="mt-2 w-full rounded-2xl border border-white/[0.1] bg-black/40 px-4 py-3 text-sm text-white outline-none transition focus:border-[#7ED6FF]/50"
+        className="mt-2 w-full rounded-2xl border border-line bg-[var(--inset)] px-4 py-3 text-sm text-[var(--fg)] outline-none transition focus:border-[#7ED6FF]/50"
       />
 
       <button
@@ -472,7 +472,7 @@ function SendPanel({ fromAddress }: { fromAddress: string }) {
             href={explorerTxUrl(txHash)}
             target="_blank"
             rel="noreferrer"
-            className="underline hover:text-white"
+            className="underline hover:text-[var(--fg)]"
           >
             View transaction
           </a>

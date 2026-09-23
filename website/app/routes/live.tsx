@@ -23,7 +23,7 @@ export function meta({}: Route.MetaArgs) {
 
 export default function LivePage() {
   return (
-    <div className="min-h-screen overflow-x-hidden bg-black">
+    <div className="page-root">
       <SiteHeader />
       <main className="page-shell relative pt-20 pb-28 md:pt-28">
         <Reveal>
@@ -33,10 +33,10 @@ export default function LivePage() {
             <br />
             <span className="text-gradient">live.</span>
           </h1>
-          <p className="mt-6 max-w-xl text-lg leading-relaxed text-[#8a8a8a]">
+          <p className="mt-6 max-w-xl text-lg leading-relaxed text-mute">
             A prompt enters machines you do not control. Watch the
             reconstruction number fall. Then read the receipt. Or{" "}
-            <a href="/split" className="text-[#7ED6FF] hover:text-white">
+            <a href="/split" className="text-accent hover:text-[var(--fg)]">
               split a secret yourself
             </a>
             .

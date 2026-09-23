@@ -38,7 +38,7 @@ function Section({
       <h2 className="mt-4 text-[clamp(1.75rem,3.4vw,2.35rem)] font-semibold leading-tight tracking-[-0.02em]">
         {title}
       </h2>
-      <div className="paper-body mt-6 space-y-5 text-[16px] leading-[1.75] text-[#a3a3a3] md:text-[17px]">
+      <div className="paper-body mt-6 space-y-5 text-[16px] leading-[1.75] text-mute md:text-[17px]">
         {children}
       </div>
     </section>
@@ -47,7 +47,7 @@ function Section({
 
 function Pull({ children }: { children: ReactNode }) {
   return (
-    <blockquote className="border-l border-[#7ED6FF]/40 pl-5 text-[17px] leading-relaxed text-[#d4d4d4] md:text-lg">
+    <blockquote className="border-l border-[#7ED6FF]/40 pl-5 text-[17px] leading-relaxed text-[var(--fg)]/75 md:text-lg">
       {children}
     </blockquote>
   );
@@ -65,23 +65,23 @@ function Result({
   note: string;
 }) {
   return (
-    <div className="rounded-2xl border border-white/[0.06] bg-black/40 p-5">
-      <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-[#5c5c5c]">
+    <div className="rounded-2xl border border-line bg-[var(--inset)] p-5">
+      <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-[var(--mute-soft)]">
         {label}
       </p>
       <div className="mt-3 flex flex-wrap items-baseline gap-x-4 gap-y-1 font-mono text-sm">
-        <span className="text-[#8a8a8a]">{before}</span>
-        <span className="text-[#5c5c5c]">→</span>
+        <span className="text-mute">{before}</span>
+        <span className="text-[var(--mute-soft)]">→</span>
         <span className="text-[#5ce6a5]">{after}</span>
       </div>
-      <p className="mt-3 text-[14px] leading-relaxed text-[#8a8a8a]">{note}</p>
+      <p className="mt-3 text-[14px] leading-relaxed text-mute">{note}</p>
     </div>
   );
 }
 
 export default function PaperPage() {
   return (
-    <div className="min-h-screen overflow-x-hidden bg-black">
+    <div className="page-root">
       <SiteHeader />
       <main className="page-shell relative pt-20 pb-28 md:pt-28">
         <article className="mx-auto max-w-3xl">
@@ -92,12 +92,12 @@ export default function PaperPage() {
               <br />
               <span className="text-gradient">actually proven.</span>
             </h1>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-[#8a8a8a] md:text-xl">
+            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-mute md:text-xl">
               Treat privacy the way prior work treated correctness — as a
               measured, adversarial, per-run property with a number a skeptic
               can re-check. Not a promise.
             </p>
-            <div className="mt-8 flex flex-wrap gap-x-8 gap-y-2 text-[13px] text-[#6f6f6f]">
+            <div className="mt-8 flex flex-wrap gap-x-8 gap-y-2 text-[13px] text-mute">
               <span>Nuro AI</span>
               <span>Theoretical model + measured gates</span>
               <span>2026</span>
@@ -115,10 +115,10 @@ export default function PaperPage() {
                 <p>
                   Prior proven work (Shard) established that a model too big for
                   any single card can be served across untrusted machines over
-                  the open internet, fast and <em className="text-[#d4d4d4]">correct</em>,
+                  the open internet, fast and <em className="text-[var(--fg)]/75">correct</em>,
                   with a receipt anyone can check. It also established the
                   counter-fact that motivates us: a node running your layer{" "}
-                  <strong className="font-medium text-white">
+                  <strong className="font-medium text-[var(--fg)]">
                     decrypts to compute
                   </strong>
                   , and from the activations it sees it can reconstruct a large
@@ -151,7 +151,7 @@ export default function PaperPage() {
                 </Pull>
                 <p>
                   The load-bearing metric is the{" "}
-                  <strong className="font-medium text-white">
+                  <strong className="font-medium text-[var(--fg)]">
                     fraction of input tokens reconstructed
                   </strong>
                   , with a distributional variant (top-k recovery) for partial
@@ -179,7 +179,7 @@ export default function PaperPage() {
                   adversary:
                 </p>
                 <p>
-                  <strong className="font-medium text-white">
+                  <strong className="font-medium text-[var(--fg)]">
                     Boundary pinning.
                   </strong>{" "}
                   Embedding and final layers carry the most recoverable signal.
@@ -190,7 +190,7 @@ export default function PaperPage() {
                   persist at every depth.
                 </p>
                 <p>
-                  <strong className="font-medium text-white">
+                  <strong className="font-medium text-[var(--fg)]">
                     Activation obfuscation
                   </strong>{" "}
                   (proprietary weights only). A per-request invertible
@@ -200,21 +200,21 @@ export default function PaperPage() {
                   activations. Measurement shows this is lossless-correct and
                   drops recovery to chance. Measurement also shows it fails on
                   open weights: a node holding public{" "}
-                  <span className="font-mono text-[#c9c9c9]">W</span> and
+                  <span className="font-mono text-[var(--fg)]/70">W</span> and
                   conjugated{" "}
-                  <span className="font-mono text-[#c9c9c9]">W′ = W·R</span>{" "}
+                  <span className="font-mono text-[var(--fg)]/70">W′ = W·R</span>{" "}
                   recovers the secret basis in closed form (
-                  <span className="font-mono text-[#c9c9c9]">R = W⁻¹·W′</span>
+                  <span className="font-mono text-[var(--fg)]/70">R = W⁻¹·W′</span>
                   ). Recovery returns to ~100%. This lever is real privacy only
                   when the serving node does not have the base weights.
                 </p>
                 <p>
-                  <strong className="font-medium text-white">
+                  <strong className="font-medium text-[var(--fg)]">
                     Secret-sharing MPC
                   </strong>{" "}
                   (open-weight privacy — the core mechanism). Split every
                   activation additively across two non-colluding nodes{" "}
-                  <span className="font-mono text-[#c9c9c9]">x = s₀ + s₁</span>.
+                  <span className="font-mono text-[var(--fg)]/70">x = s₀ + s₁</span>.
                   A single share is uniformly random, so its leakage is zero by
                   construction — information-theoretic, not an assumption an
                   attacker can undo. Public-weight linear layers are free under
@@ -225,7 +225,7 @@ export default function PaperPage() {
                   communication rounds are slow over a wide-area network.
                 </p>
                 <p>
-                  <strong className="font-medium text-white">
+                  <strong className="font-medium text-[var(--fg)]">
                     Edge containment.
                   </strong>{" "}
                   Raw tokens never leave a trusted boundary. Embedding and
@@ -233,7 +233,7 @@ export default function PaperPage() {
                   states — never token ids — cross the wire.
                 </p>
                 <p>
-                  <strong className="font-medium text-white">
+                  <strong className="font-medium text-[var(--fg)]">
                     Trusted routing
                   </strong>{" "}
                   is a per-request option: trade some decentralization for a
@@ -269,7 +269,7 @@ export default function PaperPage() {
                   receipts prove the input stayed hidden. Same discipline,
                   different property.
                 </p>
-                <pre className="overflow-x-auto rounded-2xl border border-white/[0.06] bg-black/50 p-5 font-mono text-[12px] leading-relaxed text-[#c9c9c9] md:text-[13px]">
+                <pre className="overflow-x-auto rounded-2xl border border-line bg-[var(--inset)] p-5 font-mono text-[12px] leading-relaxed text-[var(--fg)]/70 md:text-[13px]">
 {`{
   "run_id": "...",
   "utc": "...",
@@ -309,13 +309,13 @@ export default function PaperPage() {
                   Qwen2.5-0.5B. They prove the mechanism. They are not a
                   blanket guarantee for every production request.
                 </p>
-                <figure className="overflow-hidden rounded-2xl border border-white/[0.06] bg-black">
+                <figure className="overflow-hidden rounded-2xl border border-line bg-[var(--inset)]">
                   <img
                     src="/paper-mpc-benchmark.png"
                     alt="Prompt recovery: undefended 100%, open-weight obfuscation 100%, one MPC share 0.21%, attack replayed 0.21%. Correctness 99.6%. Collusion 99.2%."
                     className="w-full"
                   />
-                  <figcaption className="px-5 py-3 text-[13px] leading-relaxed text-[#6f6f6f]">
+                  <figcaption className="px-5 py-3 text-[13px] leading-relaxed text-mute">
                     How much of a prompt an untrusted node recovers. Lower is
                     more private. Chance is 0.2% (1 / 512 vocab).
                   </figcaption>
@@ -402,20 +402,20 @@ export default function PaperPage() {
                   on later. It is the open problem this paper exists to close.
                 </p>
                 <p>
-                  <a href="/earn" className="text-[#7ED6FF] hover:text-white">
+                  <a href="/earn" className="text-accent hover:text-[var(--fg)]">
                     Contribute compute
                   </a>
-                  <span className="text-[#5c5c5c]"> · </span>
+                  <span className="text-[var(--mute-soft)]"> · </span>
                   <a
                     href="https://docs.nuroai.xyz"
-                    className="text-[#7ED6FF] hover:text-white"
+                    className="text-accent hover:text-[var(--fg)]"
                   >
                     Read the docs
                   </a>
-                  <span className="text-[#5c5c5c]"> · </span>
+                  <span className="text-[var(--mute-soft)]"> · </span>
                   <a
                     href="https://data.nuroai.xyz"
-                    className="text-[#7ED6FF] hover:text-white"
+                    className="text-accent hover:text-[var(--fg)]"
                   >
                     Live data
                   </a>

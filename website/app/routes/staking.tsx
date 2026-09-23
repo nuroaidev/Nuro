@@ -49,18 +49,18 @@ export function meta({}: Route.MetaArgs) {
 
 export default function StakingPage() {
   return (
-    <div className="min-h-screen overflow-x-hidden bg-black">
+    <div className="page-root">
       <SiteHeader />
       <main className="page-shell relative pt-20 pb-24 md:pt-28">
         <Reveal>
           <p className="label-caps">Private inference economy</p>
           <h1 className="mt-5 text-[clamp(2.25rem,5vw,3.75rem)] font-semibold leading-[1.02] tracking-[-0.03em]">
             Stake <span className="text-gradient">$NURO</span>
-            <span className="ml-3 align-middle text-base font-normal text-[#6f6f6f]">
+            <span className="ml-3 align-middle text-base font-normal text-mute">
               · {STAKING_APY_PCT}% APY
             </span>
           </h1>
-          <p className="mt-5 max-w-xl text-base leading-relaxed text-[#8a8a8a] md:text-lg">
+          <p className="mt-5 max-w-xl text-base leading-relaxed text-mute md:text-lg">
             Lock $NURO for a fixed term and earn {STAKING_APY_PCT}% APY, paid in
             full at maturity. Your $NURO stays self-custodied on Robinhood Chain —
             only you can withdraw, and your reward is reserved on-chain the moment
@@ -249,13 +249,13 @@ function StakeCard() {
         {/* Left: stake panel */}
         <div className="glass-panel rounded-[1.75rem] p-6 md:p-8">
           <div className="flex items-center justify-between">
-            <p className="section-index text-[#7ED6FF]/70">Lock & earn</p>
+            <p className="section-index text-accent/70">Lock & earn</p>
             {authenticated && address && (
               <a
                 href={explorerAddressUrl(address)}
                 target="_blank"
                 rel="noreferrer"
-                className="text-[11px] text-[#8a8a8a] transition hover:text-[#D4F3FF]"
+                className="text-[11px] text-mute transition hover:text-accent"
                 title="Your in-app wallet — fund this address with $NURO to stake"
               >
                 Wallet {shortAddress(address)} ↗
@@ -275,11 +275,11 @@ function StakeCard() {
                   className={`rounded-2xl border px-4 py-4 text-left transition ${
                     active
                       ? "border-[#7ED6FF]/60 bg-[#7ED6FF]/[0.08]"
-                      : "border-white/[0.08] bg-black/40 hover:border-white/20"
+                      : "border-line bg-[var(--inset)] hover:border-[var(--fg)]/20"
                   }`}
                 >
-                  <div className="text-sm font-semibold text-white">{TERM_LABEL[t]}</div>
-                  <div className="mt-1 text-[11px] text-[#8a8a8a]">
+                  <div className="text-sm font-semibold text-[var(--fg)]">{TERM_LABEL[t]}</div>
+                  <div className="mt-1 text-[11px] text-mute">
                     {STAKING_APY_PCT}% APY · earns {effectiveRatePct(t).toFixed(2)}% of stake
                   </div>
                 </button>
@@ -288,8 +288,8 @@ function StakeCard() {
           </div>
 
           {/* Amount */}
-          <div className="mt-5 rounded-2xl border border-white/[0.08] bg-black/40 p-4">
-            <div className="flex items-center justify-between text-[12px] text-[#8a8a8a]">
+          <div className="mt-5 rounded-2xl border border-line bg-[var(--inset)] p-4">
+            <div className="flex items-center justify-between text-[12px] text-mute">
               <span>Amount to lock</span>
               <span>
                 Balance: {formatUnits(balance, decimals)} {NURO_SYMBOL}
@@ -301,12 +301,12 @@ function StakeCard() {
                 placeholder="0.0"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
-                className="w-full bg-transparent text-2xl font-semibold tracking-[-0.02em] text-white outline-none placeholder:text-[#4a4a4a]"
+                className="w-full bg-transparent text-2xl font-semibold tracking-[-0.02em] text-[var(--fg)] outline-none placeholder:text-[var(--mute-soft)]"
               />
               <button
                 type="button"
                 onClick={() => setAmount(plainUnits(balance, decimals))}
-                className="rounded-full border border-white/[0.12] px-3 py-1 text-[11px] font-medium text-[#D4F3FF] transition hover:border-[#7ED6FF]/50"
+                className="rounded-full border border-line px-3 py-1 text-[11px] font-medium text-accent transition hover:border-[#7ED6FF]/50"
               >
                 MAX
               </button>
@@ -314,9 +314,9 @@ function StakeCard() {
           </div>
 
           {/* Projection */}
-          <div className="mt-4 flex items-center justify-between rounded-2xl border border-white/[0.06] bg-white/[0.02] px-4 py-3 text-sm">
-            <span className="text-[#8a8a8a]">You’ll receive at maturity</span>
-            <span className="font-medium text-[#D4F3FF]">
+          <div className="mt-4 flex items-center justify-between rounded-2xl border border-line bg-[var(--panel)] px-4 py-3 text-sm">
+            <span className="text-mute">You’ll receive at maturity</span>
+            <span className="font-medium text-accent">
               {parsed ? formatUnits(parsed + projectedReward, decimals) : "0"} {NURO_SYMBOL}
               <span className="ml-2 text-[12px] text-[#7ee6a6]">
                 +{formatUnits(projectedReward, decimals)} reward
@@ -341,7 +341,7 @@ function StakeCard() {
           {notice && <p className="mt-3 text-center text-[13px] text-[#7ee6a6]">{notice}</p>}
           {error && <p className="mt-3 text-center text-[13px] text-[#ff9b9b]">{error}</p>}
 
-          <p className="mt-4 text-[11px] leading-relaxed text-[#5c5c5c]">
+          <p className="mt-4 text-[11px] leading-relaxed text-[var(--mute-soft)]">
             Your reward is fixed and reserved on-chain when you stake, then paid
             with your principal at maturity. Need out early? Emergency exit returns
             your principal (reward is forfeited). Settles on Robinhood Chain.
@@ -351,20 +351,20 @@ function StakeCard() {
         {/* Right: positions */}
         <div className="glass-panel rounded-[1.75rem] p-6 md:p-8">
           <div className="flex items-center justify-between">
-            <p className="section-index text-[#7ED6FF]/70">Your stakes</p>
+            <p className="section-index text-accent/70">Your stakes</p>
             {summary && (
-              <span className="text-[11px] text-[#5c5c5c]">
+              <span className="text-[11px] text-[var(--mute-soft)]">
                 Pool capacity: {formatUnits(summary.availableRewards, decimals)} {NURO_SYMBOL}
               </span>
             )}
           </div>
 
           {!authenticated ? (
-            <p className="mt-6 text-[14px] text-[#8a8a8a]">
+            <p className="mt-6 text-[14px] text-mute">
               Connect your wallet to see your locked positions.
             </p>
           ) : positions.length === 0 ? (
-            <p className="mt-6 text-[14px] text-[#8a8a8a]">
+            <p className="mt-6 text-[14px] text-mute">
               {loading ? "Loading positions…" : "No active stakes yet. Lock some $NURO to start earning."}
             </p>
           ) : (
@@ -402,10 +402,10 @@ function PositionRow({
 }) {
   const unlock = new Date(p.unlockAt * 1000);
   return (
-    <li className="rounded-2xl border border-white/[0.08] bg-black/40 p-4">
+    <li className="rounded-2xl border border-line bg-[var(--inset)] p-4">
       <div className="flex items-start justify-between">
         <div>
-          <div className="text-base font-semibold text-white">
+          <div className="text-base font-semibold text-[var(--fg)]">
             {formatUnits(p.amount, decimals)} {NURO_SYMBOL}
           </div>
           <div className="mt-1 text-[12px] text-[#7ee6a6]">
@@ -416,14 +416,14 @@ function PositionRow({
           className={`rounded-full px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide ${
             p.matured
               ? "bg-[#7ee6a6]/[0.14] text-[#7ee6a6]"
-              : "bg-white/[0.06] text-[#8a8a8a]"
+              : "bg-[var(--inset)] text-mute"
           }`}
         >
           {p.matured ? "Matured" : "Locked"}
         </span>
       </div>
       <div className="mt-3 flex items-center justify-between">
-        <span className="text-[12px] text-[#8a8a8a]">
+        <span className="text-[12px] text-mute">
           {p.matured ? "Unlocked" : `Unlocks ${unlock.toLocaleDateString()}`}
         </span>
         {p.matured ? (
@@ -440,7 +440,7 @@ function PositionRow({
             type="button"
             onClick={onEmergency}
             disabled={busy}
-            className="rounded-full border border-white/[0.12] px-4 py-1.5 text-xs font-medium text-[#ff9b9b] transition hover:border-[#ff9b9b]/50 disabled:opacity-40"
+            className="rounded-full border border-line px-4 py-1.5 text-xs font-medium text-[#ff9b9b] transition hover:border-[#ff9b9b]/50 disabled:opacity-40"
           >
             Emergency exit
           </button>
@@ -454,11 +454,11 @@ function PreviewCard() {
   return (
     <Reveal>
       <div className="glass-panel mt-12 rounded-[1.75rem] p-8 md:p-10">
-        <p className="section-index text-[#7ED6FF]/70">Coming online</p>
+        <p className="section-index text-accent/70">Coming online</p>
         <h2 className="mt-3 text-xl font-semibold tracking-[-0.02em] md:text-2xl">
           Staking activates when $NURO launches on Robinhood Chain
         </h2>
-        <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-[#8a8a8a]">
+        <p className="mt-4 max-w-xl text-[15px] leading-relaxed text-mute">
           Lock $NURO for 6 months or 1 year and earn a fixed {STAKING_APY_PCT}%
           APY, paid at maturity. Once the staking contract is live, this page
           connects to your wallet automatically — self-custodied, with your reward
@@ -493,10 +493,10 @@ function RevenueNote() {
           variant={i === 0 ? "left" : i === 2 ? "right" : "up"}
         >
           <article className="card glass-panel h-full rounded-[1.5rem] p-7">
-            <h3 className="text-base font-semibold tracking-[-0.02em] text-[#D4F3FF]">
+            <h3 className="text-base font-semibold tracking-[-0.02em] text-accent">
               {p.title}
             </h3>
-            <p className="mt-3 text-[14px] leading-relaxed text-[#8a8a8a]">{p.body}</p>
+            <p className="mt-3 text-[14px] leading-relaxed text-mute">{p.body}</p>
           </article>
         </Reveal>
       ))}

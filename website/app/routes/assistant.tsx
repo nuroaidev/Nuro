@@ -34,11 +34,11 @@ export default function AssistantRoute() {
 
 function AssistantBooting() {
   return (
-    <div className="flex min-h-screen flex-col overflow-x-hidden bg-[var(--bg)] text-[var(--fg)]">
+    <div className="page-root flex flex-col">
       <SiteHeader />
       <main className="page-shell relative flex flex-1 flex-col items-center justify-center pb-10">
         <AssistantMascot />
-        <p className="mt-6 text-sm text-[#8a8a8a]">Loading the assistant…</p>
+        <p className="mt-6 text-sm text-mute">Loading the assistant…</p>
       </main>
     </div>
   );

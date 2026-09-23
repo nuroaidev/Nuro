@@ -93,7 +93,7 @@ export default function TreasuryPage() {
   ];
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-black">
+    <div className="page-root">
       <SiteHeader />
       <main className="page-shell relative pt-20 pb-24 md:pt-28">
         <Reveal>
@@ -107,7 +107,7 @@ export default function TreasuryPage() {
               </span>
             )}
           </div>
-          <p className="mt-5 max-w-2xl text-base leading-relaxed text-[#8a8a8a] md:text-lg">
+          <p className="mt-5 max-w-2xl text-base leading-relaxed text-mute md:text-lg">
             100% of the compute margin and a share of $NURO trading fees flow
             into this treasury. Half buys back and burns $NURO; half is paid to
             stakers in USDC.{" "}
@@ -135,10 +135,10 @@ export default function TreasuryPage() {
                 >
                   {c.value}
                 </p>
-                <p className="mt-2 text-[15px] text-[#a3a3a3]">{c.label}</p>
+                <p className="mt-2 text-[15px] text-mute">{c.label}</p>
                 <p
                   className={`mt-1 text-[13px] ${
-                    c.accent ? "text-[#4ADE80]/70" : "text-[#6f6f6f]"
+                    c.accent ? "text-[#4ADE80]/70" : "text-mute"
                   }`}
                 >
                   {c.sub}
@@ -180,7 +180,7 @@ export default function TreasuryPage() {
                 <p className="text-2xl font-semibold tracking-[-0.02em]">
                   {c.value}
                 </p>
-                <p className="mt-1.5 text-[13px] text-[#6f6f6f]">{c.label}</p>
+                <p className="mt-1.5 text-[13px] text-mute">{c.label}</p>
               </div>
             </Reveal>
           ))}
@@ -216,13 +216,13 @@ function ChartCard({
       <p className="mt-2 text-2xl font-semibold tracking-[-0.02em]">
         {headline}
       </p>
-      <p className="mt-1 text-[13px] text-[#6f6f6f]">{sub}</p>
+      <p className="mt-1 text-[13px] text-mute">{sub}</p>
 
       {comingSoon ? (
-        <div className="mt-5 flex h-40 w-full items-center justify-center rounded-xl border border-dashed border-white/[0.1] md:h-48">
+        <div className="mt-5 flex h-40 w-full items-center justify-center rounded-xl border border-dashed border-line md:h-48">
           <div className="text-center">
-            <p className="text-sm font-medium text-[#8a8a8a]">Coming soon</p>
-            <p className="mt-1 text-[12px] text-[#5c5c5c]">Under development</p>
+            <p className="text-sm font-medium text-mute">Coming soon</p>
+            <p className="mt-1 text-[12px] text-[var(--mute-soft)]">Under development</p>
           </div>
         </div>
       ) : (
@@ -235,7 +235,7 @@ function ChartCard({
               ariaLabel={caption}
             />
           </div>
-          <div className="mt-3 flex items-center justify-between text-[12px] text-[#5c5c5c]">
+          <div className="mt-3 flex items-center justify-between text-[12px] text-[var(--mute-soft)]">
             <span>{startLabel}</span>
             <span>{endLabel}</span>
           </div>
